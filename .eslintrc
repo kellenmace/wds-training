@@ -1,0 +1,29 @@
+{
+ "parser": "babel-eslint",
+ "env": {
+   "browser": true,
+   "jquery": true,
+   "es6": true
+ },
+ "parserOptions": {
+   "ecmaVersion": 6,
+   "ecmaFeatures": {
+     "jsx": true,
+     "modules": true
+   }
+ },
+ "globals": {
+   "WP_API": true
+ },
+ "extends": "wordpress",
+ "installedESLint": true,
+ "plugins": [
+   "react",
+   "import"
+ ],
+ "rules": {
+   "react/jsx-uses-vars": [2],
+   "react/jsx-uses-react": [2],
+   "import/prefer-default-export": "off"
+ }
+}
