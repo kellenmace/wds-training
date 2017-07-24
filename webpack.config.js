@@ -1,48 +1,66 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
 module.exports = {
   entry: './app/index.js',
   output: {
-    path: __dirname + '/assets',
-    filename: "scripts.js"
-  },
-  resolve: {
-    extensions: ['.js', '.html', '.scss']
+    path: path.resolve(__dirname, 'dist'),
+    filename: "scripts.min.js"
   },
   module: {
-    loaders: [
+    rules: [
+      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
       {
         test: /\.js$/,
-        exclude: '/node_modules/',
-        loader: 'babel-loader'
-      }
-    ],
-    rules: [
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            configFile: path.join( __dirname, '.eslintrc' ),
+            //failOnError: true,
+            quiet: true,
+          }
+        },
+        exclude: /node_modules/,
+      },
       {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['env']
-        }
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: { minimize: true }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: function () {
+                  return [autoprefixer, cssnano]
+                }
+              }
+            },
+            'sass-loader'
+          ]
+        })
       }
-    },
-    {
-      test: /\.(css|scss)$/,
-      use: ExtractTextPlugin.extract('css!postcss!sass')
-    }
     ]
   },
-  //postcss: [autoprefixer],
+  // eslint: {
+  //   configFile: path.join( __dirname, '.eslintrc' ),
+  //   failOnError: true,
+  //   quiet: true,
+  // },
   plugins: [
-      require('autoprefixer'),
-      new ExtractTextPlugin({
-        filename: 'style.css',
-        allChunks: true
-      })
+    new ExtractTextPlugin('style.min.css'),
+    new webpack.optimize.UglifyJsPlugin(),
   ],
-	devtool: 'inline-source-map'
+  devtool: 'inline-source-map'
 };
+
+
+// For reference:
+// https://github.com/ryelle/Foxhound/blob/master/webpack.config.js
+// https://github.com/efuller/modern-wp-with-react/blob/master/webpack.config.js

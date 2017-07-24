@@ -62,12 +62,11 @@ class WDST_Enqueue_JS {
 			return;
 		}
 
-		// todo: include these styles somewhere via JS import instead of enqueuing via WP.
-		wp_enqueue_style( 'react-datetime', $this->plugin->url . 'assets/styles/react-datetime.css' );
-		wp_enqueue_style( 'react-select', $this->plugin->url . 'assets/styles/react-select.css' );
+		wp_enqueue_style( 'wds-training', $this->plugin->url . 'dist/style.min.css', array(), '1.0.0' );
 
-		wp_enqueue_script( 'wds-training', $this->plugin->url . 'assets/scripts.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'wds-training', $this->plugin->url . 'dist/scripts.min.js', array(), '1.0.0', true );
 
+		// todo: consider switching this to use wp_add_inline_script() like foxhound does.
 		wp_localize_script( 'wds-training', 'WDSTTrainingData', $this->get_data_to_localize() );
 	}
 

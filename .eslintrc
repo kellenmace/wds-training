@@ -16,7 +16,6 @@
    "WP_API": true
  },
  "extends": "wordpress",
- "installedESLint": true,
  "plugins": [
    "react",
    "import"

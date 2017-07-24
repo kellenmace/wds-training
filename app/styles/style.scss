@@ -1,0 +1,9 @@
+@import "vendor/react-datetime.css";
+@import "vendor/react-select.css";
+
+body {
+  background: #ddd;
+  &:fullscreen a {
+    display: flex
+  }
+}
