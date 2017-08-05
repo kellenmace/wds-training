@@ -16,6 +16,8 @@ class App extends React.Component {
 		this.updateCurrentView = this.updateCurrentView.bind(this);
 		this.updateTraining = this.updateTraining.bind(this);
 		this.updateTrainingUpvotes = this.updateTrainingUpvotes.bind(this);
+		this.addPendingSyncItem = this.addPendingSyncItem.bind(this);
+		this.deletePendingSyncItem = this.deletePendingSyncItem.bind(this);
 		this.deleteTraining = this.deleteTraining.bind(this);
 		this.removeTrainingsFromPendingDeletion = this.removeTrainingsFromPendingDeletion.bind(this);
 		this.removeTrainingFromPendingDeletion = this.removeTrainingFromPendingDeletion.bind(this);
@@ -28,10 +30,11 @@ class App extends React.Component {
 
         // Initialize the state.
         this.state = {
-            trainings: WDSTTrainingData.trainings,
-			users: WDSTTrainingData.users,
 			currentView: 'suggestedTrainings',
-        }
+			trainings: WDSTTrainingData.trainings,
+			users: WDSTTrainingData.users,
+			pendingSync: []
+		}
     }
 
 	// Update the current view.
@@ -41,17 +44,68 @@ class App extends React.Component {
 
 	// Event handler for updating a training.
 	updateTraining( event ) {
-		const trainingID = this.getTrainingIDFromFormID( event.target.parentElement.id );
+		// todo: consider changing this to a ref instead of accessing the DOM directly.
+		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const key = event.target.name;
 		const value = event.target.value;
 
 		this.updateTrainingState( trainingID, key, value );
-		this.updateTrainingPost( trainingID, key, value );
+
+		// If a sync for this training and this key is already pending, delete it.
+		this.deletePendingSyncItem( trainingID, key );
+
+		// Set a timeout to update the training in the database after 1 second of inactivity.
+		const timeoutID = setTimeout( () => {
+			this.updateTrainingPost( trainingID, key, value );
+			this.deletePendingSyncItem( trainingID, key );
+		}, 1000 );
+
+		// Add item to the list of items pending sync.
+		this.addPendingSyncItem( timeoutID, trainingID, key, value );
+	}
+
+	// Clear old sync timeouts, remove duplicates from the list of items pending sync, then add a new one.
+	addPendingSyncItem( timeoutID, trainingID, key, value ) {
+		const oldPendingSync = this.state.pendingSync.slice();
+		const pendingSyncItem = oldPendingSync.filter( oldPendingSyncItem => trainingID == oldPendingSyncItem.trainingID && key == oldPendingSyncItem.key );
+
+		// If there is a pending sync for this training and key, clear its timeout.
+		if ( pendingSyncItem.length ) {
+			clearTimeout( pendingSyncItem[0].timeoutID );
+		}
+
+		// Remove the old pending sync item, if one with this training ID and key exists.
+		const pendingSync = oldPendingSync.filter( oldPendingSyncItem => trainingID != oldPendingSyncItem.trainingID || key != oldPendingSyncItem.key );
+
+		// Add the new pending sync item.
+		pendingSync.push( { timeoutID, trainingID, key, value } );
+
+		// Update the state to remove the pending sync for this training and key.
+		this.setState({ pendingSync });
+	}
+
+	// Clear the timeout for an item that is pending sync, then remove it from the pending sync list.
+	deletePendingSyncItem( trainingID, key ) {
+		const oldPendingSync = this.state.pendingSync.slice();
+		const pendingSyncItem = oldPendingSync.filter( oldPendingSyncItem => trainingID == oldPendingSyncItem.trainingID && key == oldPendingSyncItem.key );
+
+		if ( pendingSyncItem.length <= 0 ) {
+			return;
+		}
+
+		// Clear the timeout for this item.
+		clearTimeout( pendingSyncItem[0].timeoutID );
+
+		// The pending sync items, with the one we're targeting removed.
+		const pendingSync = oldPendingSync.filter( oldPendingSyncItem => trainingID != oldPendingSyncItem.trainingID && key != oldPendingSyncItem.key );
+
+		this.setState({ pendingSync });
 	}
 
 	// Event handler for updating a training's upvotes.
 	updateTrainingUpvotes( event ) {
-		const trainingID = this.getTrainingIDFromFormID( event.target.parentElement.id );
+		// todo: consider changing this to a ref instead of accessing the DOM directly.
+		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const key = event.target.name;
 		const value = this.getNewUpvotesValue( trainingID, key );
 
@@ -148,7 +202,8 @@ class App extends React.Component {
 
 	// Event handler for deleting a training.
 	deleteTraining( event ) {
-		const trainingID = this.getTrainingIDFromFormID( event.target.parentElement.id );
+		// todo: consider changing this to a ref instead of accessing the DOM directly.
+		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const training = this.getTrainingFromState( trainingID );
 
 		if ( ! training ) {
@@ -259,7 +314,8 @@ class App extends React.Component {
 
 	// Remove 'isNewlyCreatedTraining' property from a training.
 	removeNewlyCreatedTrainingProperty( event ) {
-		const trainingID = this.getTrainingIDFromFormID( event.target.parentElement.id );
+		// todo: consider changing this to a ref instead of accessing the DOM directly.
+		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const training = this.getTrainingFromState( trainingID );
 
 		if ( ! this.isNewlyCreatedTraining( training ) ) {

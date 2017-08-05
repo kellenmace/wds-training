@@ -13,18 +13,18 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            configFile: path.join( __dirname, '.eslintrc' ),
-            //failOnError: true,
-            quiet: true,
-          }
-        },
-        exclude: /node_modules/,
-      },
+      // {
+      //   test: /\.js$/,
+      //   use: {
+      //     loader: 'eslint-loader',
+      //     options: {
+      //       configFile: path.join( __dirname, '.eslintrc' ),
+      //       //failOnError: true,
+      //       quiet: true,
+      //     }
+      //   },
+      //   exclude: /node_modules/,
+      // },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
@@ -32,13 +32,13 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
-              options: { minimize: true }
+              //options: { minimize: true }
             },
             {
               loader: 'postcss-loader',
               options: {
                 plugins: function () {
-                  return [autoprefixer, cssnano]
+                  return [autoprefixer]//return [autoprefixer, cssnano]
                 }
               }
             },
@@ -55,7 +55,7 @@ module.exports = {
   // },
   plugins: [
     new ExtractTextPlugin('style.min.css'),
-    new webpack.optimize.UglifyJsPlugin(),
+    //new webpack.optimize.UglifyJsPlugin(),
   ],
   devtool: 'inline-source-map'
 };

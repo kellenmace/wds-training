@@ -3,10 +3,7 @@ import Datetime from 'react-datetime';
 import moment from 'moment';
 import Select from 'react-select';
 import axios from 'axios';
-
-// todo: include these styles somewhere via import instead of enqueuing via WP.
-// import 'react-select/dist/react-select.css';
-// react-datetime
+import { TransitionGroup, CSSTransition, Transition } from 'react-transition-group';
 
 class Training extends React.Component {
 	constructor() {
@@ -73,13 +70,14 @@ class Training extends React.Component {
 		// We have to build an object that mimics an event object, since react-datetime
 		// doesn't provide the actual select onChange event. More info here:
 		// https://github.com/YouCanBookMe/react-datetime/issues/301
+
+		const formID = this.getTrainingFormID();
+
 		const event = {
 			target: {
 				name: 'timestamp',
 				value: this.getTimestampFromMomentObject(momentObject),
-				parentElement: {
-					id: this.getTrainingFormID()
-				}
+				closest: () => { return { id: formID  }; }
 			}
 		};
 
@@ -98,13 +96,14 @@ class Training extends React.Component {
 		// doesn't provide the actual select onChange event. More info here:
 		// https://github.com/JedWatson/react-select/issues/1631
 		// https://github.com/JedWatson/react-select/issues/520
+
+		const formID = this.getTrainingFormID();
+
 		const event = {
 			target: {
 				name: 'blogPost',
 				value,
-				parentElement: {
-					id: this.getTrainingFormID()
-				}
+				closest: () => { return { id: formID  }; }
 			}
 		};
 
@@ -135,11 +134,25 @@ class Training extends React.Component {
 
 		return(
 			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past" style={tempTrainingStyles}>
-				<form id={this.getTrainingFormID()} onSubmit={this.handleSubmit}>
-					<button name="upvotedBy" onClick={this.props.updateTrainingUpvotes}>{voteStatus}</button>
-					<span>{this.props.training.upvotedBy.length} Upvotes</span>
+				<form id={this.getTrainingFormID()} className="training-form" onSubmit={this.handleSubmit}>
+					<div className="top-bar">
+						<button name="upvotedBy" onClick={this.props.updateTrainingUpvotes}>{voteStatus}</button>
+							<span>
+								<TransitionGroup component="span">
+									<CSSTransition
+										key={this.props.training.upvotedBy.length}
+										classNames="upvotes"
+										timeout={{ enter: 5000, exit: 5000 }}//todo: change back to 250
+									>
+										<span key={this.props.training.upvotedBy.length}>{this.props.training.upvotedBy.length}</span>
+									</CSSTransition>
+								</TransitionGroup>
+								 Upvotes
+							</span>
+						<button type="button" name="delete" ref="button" onClick={this.props.deleteTraining}>{deleteButtonText}</button>
+					</div>
 					<input type="text" name="title" value={this.props.training.title} placeholder="Title" onChange={this.props.updateTraining} />
-					<textarea name="content" value={this.props.training.description} placeholder="Description" onChange={this.props.updateTraining} />
+					<textarea name="content" value={this.props.training.content} placeholder="Description" onChange={this.props.updateTraining} />
 					<Datetime name="timestamp" value={this.getMomentObject()} inputProps={{placeholder: "Date and Time"}} onChange={this.updateTimestamp} />
 					<label htmlFor={this.getDiscussionLeadID}>Discussion Lead</label>
 					<select id={this.getDiscussionLeadID} name="discussionLead" value={this.props.training.discussionLead} onChange={this.props.updateTraining}>
@@ -156,6 +169,7 @@ class Training extends React.Component {
 						)}
 					</select>
 					<Select.Async
+						// todo: value doesn't show up on page load.
 						name="blogPost"
 						value={this.props.training.blogPost}
 						loadOptions={this.getBlogPostOptions}
@@ -163,7 +177,6 @@ class Training extends React.Component {
 						simpleValue={true}
 						placeholder="Blog Post"
 					/>
-					<button type="button" name="delete" ref="button" onClick={this.props.deleteTraining}>{deleteButtonText}</button>
 					{doneButton}
 				</form>
 			</div>

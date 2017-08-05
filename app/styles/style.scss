@@ -7,3 +7,25 @@ body {
     display: flex
   }
 }
+
+.upvotes-enter {
+  position: absolute;
+  transition: all 2.5s;
+  transform: translateY(100%);
+
+  &.upvotes-enter-active {
+    transform: translateY(0);
+  }
+}
+
+.upvotes-exit {
+  position: absolute;
+  transition: all 2.5s;
+  //left: 0;
+  //bottom: 0;
+  transform: translateY(0);
+
+  &.upvotes-exit-active {
+    transform: translateY(-100%);
+  }
+}
