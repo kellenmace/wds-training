@@ -66,8 +66,7 @@ class WDST_Enqueue_JS {
 
 		wp_enqueue_script( 'wds-training', $this->plugin->url . 'dist/scripts.min.js', array(), '1.0.0', true );
 
-		// todo: consider switching this to use wp_add_inline_script() like foxhound does.
-		wp_localize_script( 'wds-training', 'WDSTTrainingData', $this->get_data_to_localize() );
+		wp_add_inline_script( 'wds-training', $this->get_app_data_as_json(), 'before' );
 	}
 
 	/**
@@ -80,12 +79,22 @@ class WDST_Enqueue_JS {
 	}
 
 	/**
-	 * Get the data to send to the front end for use in JS.
+	 * Get the app data to send to the front end for use in JS.
 	 *
 	 * @since  1.0.0
-	 * @return array The data.
+	 * @return string The app data in JSON format.
 	 */
-	public function get_data_to_localize() {
+	private function get_app_data_as_json() {
+		return 'var WDSTTrainingData = ' . wp_json_encode( $this->get_app_data() );
+	}
+
+	/**
+	 * Get the app data.
+	 *
+	 * @since  1.0.0
+	 * @return array The app data.
+	 */
+	public function get_app_data() {
 		return array(
 			'RESTBaseURL'   => esc_url_raw( $this->plugin->rest_api_endpoints->rest_base_url ),
 			'currentUserID' => get_current_user_id(),
