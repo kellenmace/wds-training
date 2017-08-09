@@ -113,6 +113,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 */
 		public function hooks() {
 			add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+			add_action( 'save_post_training', array( $this, 'delete_all_trainings_transient' ) );
 		}
 
 		/**
@@ -138,7 +139,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				),
 			) );
 
-			// Get, Update and Delete item routes.
+			// Get, update and delete item routes.
 			register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
 					array(
 						'methods'             => WP_REST_Server::READABLE,
@@ -175,8 +176,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				'callback' => array( $this, 'get_public_item_schema' ),
 			) );
 		}
-
-		// todo: delete transients whenever trainings are created, deleted or modified.
 
 		/**
 		 * Get items.
@@ -218,10 +217,24 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 
 		public function get_trainings_data( $args = array() ) {
 
+			// If no args, try to get all trainings data from a transient.
+			if ( ! $args ) {
+				$trainings_data = get_transient( 'wds_training_all_trainings_data' );
+
+				if ( $trainings_data && is_array( $trainings_data ) ) {
+					return $trainings_data;
+				}
+			}
+
 			$trainings_data = array();
 
 			foreach ( $this->get_training_posts( $args ) as $training_post ) {
 				$trainings_data[] = $this->get_training_data( $training_post );
+			}
+
+			// If no args, save all trainings data to a transient.
+			if ( ! $args ) {
+				set_transient( 'wds_training_all_trainings_data', $trainings_data, WEEK_IN_SECONDS );
 			}
 
 			return $trainings_data;
@@ -247,36 +260,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 
 			return array();
 		}
-
-//		/**
-//		 * Get the meta query for $this->get_items().
-//		 *
-//		 * @since  1.0.0
-//		 * @param  WP_REST_Request $request Full details about the request.
-//		 * @return array                    The meta query.
-//		 */
-//		private function get_training_posts_meta_query( $args ) {
-//
-//			if ( ! isset( $args['timespan'] ) || ! $args['timespan'] || ! in_array( $args['timespan'], array( 'past', 'upcoming' ) ) ) {
-//				return array();
-//			}
-//
-//			// Get upcoming events by default.
-//			$compare = '>=';
-//
-//			// If past events were requested, get those instead.
-//			if ( 'past' === $args['timespan'] ) {
-//				$compare = '<';
-//			}
-//
-//			return array(
-//				array(
-//					'key'     => $this->prefix . 'timestamp',
-//					'value'   => time(),
-//					'compare' => $compare,
-//				),
-//			);
-//		}
 
 		private function get_training_data( $training_post ) {
 
@@ -312,100 +295,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 
 			return is_wp_error( $content ) ? '' : $content;
 		}
-
-//		/**
-//		 * Get items.
-//		 *
-//		 * @since  1.0.0
-//		 * @param  WP_REST_Request $request Full details about the request.
-//		 */
-//		public function get_items( $request ) {
-//
-//			// URL: http://wp-react.dev/wp-json/wds-training/v1/trainings
-//
-//			// todo: store in a transient. Include $request->get_param('timespan') in the key so that upcoming & past are stored separately.
-//
-//			$trainings_data = array();
-//			$training_posts = $this->get_posts( $request );
-//
-//			foreach ( $training_posts as $training_post ) {
-//
-//				$training_data = $this->get_training_data( $training_post );
-//
-//				// todo: if the data above needs to be modified, use $itemdata = $this->prepare_item_for_response( $item, $request ).
-//				// see https://developer.wordpress.org/reference/classes/wp_rest_controller/prepare_item_for_response/.
-//
-//				$trainings_data[] = $this->prepare_response_for_collection( $training_data );
-//			}
-//
-//			return new WP_REST_Response( $trainings_data, 200 );
-//		}
-//
-//		/**
-//		 * Get posts.
-//		 *
-//		 * @since  1.0.0
-//		 * @param  WP_REST_Request $request Full details about the request.
-//		 * @return array                    The posts, or empty array if none.
-//		 */
-//		private function get_posts( $request ) {
-//
-//			$trainings_query = new WP_Query( array(
-//				'post_type'              => 'training',
-//				'posts_per_page'         => 500,
-//				'meta_query'             => $this->get_items_meta_query( $request ),
-//				'no_found_rows'          => true,
-//				'update_post_meta_cache' => false,
-//				'update_post_term_cache' => false,
-//			) );
-//
-//			if ( $trainings_query->have_posts() ) {
-//				return $trainings_query->get_posts();
-//			}
-//
-//			return array();
-//		}
-//
-//
-//		private function get_training_data( $training_post ) {
-//
-//			if ( is_scalar( $training_post ) ) {
-//				$training_post = get_post( $training_post );
-//			}
-//
-//			if ( ! $training_post instanceof WP_Post ) {
-//				return array();
-//			}
-//
-//			return array(
-//				'ID'             => $training_post->ID,
-//				'title'          => get_the_title( $training_post ),
-//				'content'        => $this->get_the_content( $training_post ),
-//				'timestamp'      => get_post_meta( $training_post->ID, $this->prefix . 'timestamp', true ), // todo: display as a datepicker on the front end.
-//				'discussionLead' => get_post_meta( $training_post->ID, $this->prefix . 'discussion_lead', true ),
-//				'suggestedBy'    => get_post_meta( $training_post->ID, $this->prefix . 'suggested_by', true ),
-//				'blogPost'       => get_post_meta( $training_post->ID, $this->prefix . 'blog_post', true ), // todo: display as typeahead search dropdown on the front end.
-//				'votes'          => '12', // todo: set this to the total number of upvotes in the JS.
-//				'upvotedBy'      => array(  // todo: get user IDs and names of those who upvoted.
-//					12 => 'Newman',
-//					45 => 'Jerry',
-//					78 => 'Kramer',
-//				),
-//			);
-//		}
-//
-//		/**
-//		 * Get a post's content.
-//		 *
-//		 * @param int|WP_Post $post    Optional. Post ID or post object.
-//		 * @return string     $content The post's content or empty string on failure.
-//		 */
-//		private function get_the_content( $post ) {
-//
-//			$content = get_post_field( 'post_content', $post );
-//
-//			return is_wp_error( $content ) ? '' : $content;
-//		}
 
 		/**
 		 * Permission check for getting items.
@@ -512,6 +401,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 					$this->update_training_post_meta( $training_id, $key, $value );
 			}
 
+			$this->delete_all_trainings_transient();
+
 			return new WP_REST_Response( 'Training data was updated successfully.', 200 );
 		}
 
@@ -547,6 +438,10 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				'post_modified'     => $time,
 				'post_modified_gmt' => get_gmt_from_date( $time ),
 			) );
+		}
+
+		private function delete_all_trainings_transient() {
+			delete_transient( 'wds_training_all_trainings_data' );
 		}
 
 		private function convert_camel_case_meta_key_to_snake_case( $key ) {
