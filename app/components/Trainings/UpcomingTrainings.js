@@ -22,7 +22,6 @@ class UpcomingTrainings extends React.Component {
 	render() {
 		return(
 			<div className="trainings upcoming">
-				<span>Upcoming Trainings</span>
 				{this.getUpcomingTrainings().map(training =>
 					<Training
 						key={training.ID}

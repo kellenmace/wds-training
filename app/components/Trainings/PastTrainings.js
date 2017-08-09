@@ -27,7 +27,6 @@ class PastTrainings extends React.Component {
 	render() {
 		return(
 			<div className="trainings past">
-				<span>Past Trainings</span>
 				{this.getPastTrainings().map(training =>
 					<Training
 						key={training.ID}

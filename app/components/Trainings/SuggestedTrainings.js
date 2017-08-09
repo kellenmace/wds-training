@@ -69,7 +69,6 @@ class SuggestedTrainings extends React.Component {
 	render() {
 		return(
 			<div className="trainings suggested">
-				<span>Suggested Trainings</span>
 				{this.getNewTrainingSection()}
 				{this.getSuggestedTrainings().map(training =>
 					<Training
