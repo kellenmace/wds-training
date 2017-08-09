@@ -185,34 +185,34 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 */
 		public function get_items( $request ) {
 
-			$args = $this->sanitize_array_recursively( $request->get_param( 'args' ) );
+			$args = $this->sanitize_recursively( $request->get_param( 'args' ) );
 
 			return new WP_REST_Response( $this->get_trainings_data( $args ), 200 );
 		}
 
 		/**
-		* Sanitize an array recursively.
-		*
-		* @since  1.0.0
-		* @author Kellen Mace
-		* @param  array $array The input array.
-		* @return array $array The sanitized array.
-		*/
-		private function sanitize_array_recursively( $array = array() ) {
+		 * Sanitize a value recursively. Works with both arrays and scalar values.
+		 *
+		 * @since  1.0.0
+		 * @author Kellen Mace
+		 * @param  array $value The value to sanitize.
+		 * @return array $value The sanitized value.
+		 */
+		private function sanitize_recursively( $value ) {
 
-			if ( ! is_array( $array ) ) {
-				return array();
+			if ( ! is_array( $value ) ) {
+				return sanitize_text_field( $value );
 			}
 
-			foreach ( $array as $key => $value ) {
-				if ( is_array( $value ) ) {
-					$array[ sanitize_text_field( $key ) ] = $this->sanitize_array_recursively( $value );
+			foreach ( $value as $key => $array_value ) {
+				if ( is_array( $array_value ) ) {
+					$value[ sanitize_text_field( $key ) ] = $this->sanitize_recursively( $array_value );
 				} else {
-					$array[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
+					$value[ sanitize_text_field( $key ) ] = sanitize_text_field( $array_value );
 				}
 			}
 
-			return $array;
+			return $value;
 		}
 
 		public function get_trainings_data( $args = array() ) {
@@ -380,7 +380,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 
 			$training_id = absint( $request->get_param( 'id' ) );
 			$key         = sanitize_text_field( $request->get_param( 'key' ) );
-			$value       = $request->get_param( 'value' ); // todo: sanitize values
+			$value       = $this->sanitize_recursively( $request->get_param( 'value' ) );
 
 			if ( ! $training_id || ! $key || 'training' !== get_post_type( $training_id ) ) {
 				return new WP_REST_Response( 'Invalid data was provided to the update_item REST endpoint.', 400 );
@@ -440,7 +440,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			) );
 		}
 
-		private function delete_all_trainings_transient() {
+		public function delete_all_trainings_transient() {
 			delete_transient( 'wds_training_all_trainings_data' );
 		}
 
