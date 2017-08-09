@@ -20,13 +20,8 @@ class UpcomingTrainings extends React.Component {
 	}
 
 	render() {
-
-		const tempUpcomingTrainingsStyles = {
-			border: '1px solid green',
-		};
-
 		return(
-			<div className="trainings upcoming" style={tempUpcomingTrainingsStyles}>
+			<div className="trainings upcoming">
 				<span>Upcoming Trainings</span>
 				{this.getUpcomingTrainings().map(training =>
 					<Training

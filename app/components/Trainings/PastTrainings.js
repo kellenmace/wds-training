@@ -25,13 +25,8 @@ class PastTrainings extends React.Component {
 	}
 
 	render() {
-
-		const tempPastTrainingsStyles = {
-			border: '1px solid #bbb',
-		};
-
 		return(
-			<div className="trainings past" style={tempPastTrainingsStyles}>
+			<div className="trainings past">
 				<span>Past Trainings</span>
 				{this.getPastTrainings().map(training =>
 					<Training

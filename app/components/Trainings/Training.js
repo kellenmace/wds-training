@@ -1,8 +1,6 @@
 import React from 'react';
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import Select from 'react-select';
-import axios from 'axios';
 import { TransitionGroup, CSSTransition, Transition } from 'react-transition-group';
 
 class Training extends React.Component {
@@ -12,7 +10,6 @@ class Training extends React.Component {
 		this.getTrainingDivID = this.getTrainingDivID.bind(this);
 		this.getTrainingFormID = this.getTrainingFormID.bind(this);
 		this.updateTimestamp = this.updateTimestamp.bind(this);
-		this.updateBlogPost = this.updateBlogPost.bind(this);
 	}
 
 	// Event handler for Training form submission
@@ -26,28 +23,6 @@ class Training extends React.Component {
 
 	getTrainingFormID() {
 		return 'training-form-' + this.props.training.ID;
-	}
-
-	// Get Blog Post options.
-	getBlogPostOptions(input) {
-
-		return axios.get('/wp-json/wp/v2/posts', {
-				params: {
-					search: input
-				}
-			})
-			.then(response => {
-				// Format data for use in dropdown menu.
-				return response.data.map( post => {
-					return {'value': post.id, 'label': post.title.rendered};
-				});
-			}).then((blogPostOptions) => {
-				return { options: blogPostOptions };
-			})
-			.catch(function (error) {
-				console.log(error);
-				return [];
-			});
 	}
 
 	// Get a training's timestamp in the form of a Moment object.
@@ -89,27 +64,6 @@ class Training extends React.Component {
 		return momentObject ? momentObject.unix() : '';
 	}
 
-	// Event handler for when a new blog post is selected.
-	updateBlogPost(value) {
-
-		// We have to build an object that mimics an event object, since react-select
-		// doesn't provide the actual select onChange event. More info here:
-		// https://github.com/JedWatson/react-select/issues/1631
-		// https://github.com/JedWatson/react-select/issues/520
-
-		const formID = this.getTrainingFormID();
-
-		const event = {
-			target: {
-				name: 'blogPost',
-				value,
-				closest: () => { return { id: formID  }; }
-			}
-		};
-
-		this.props.updateTraining( event );
-	}
-
 	render() {
 
 		const tempTrainingStyles = {
@@ -128,8 +82,6 @@ class Training extends React.Component {
 			doneButton = <button type="button" name="done" ref="button" onClick={this.props.removeNewlyCreatedTrainingProperty}>DONE</button>;
 		}
 
-		// todo: maybe show a spinner while blog posts are being fetched using isLoading={isLoadingExternally}
-		// todo: Blog post select doesn't populate with value on page load.
 		// todo: break some of these form fields out into their own components
 
 		return(
@@ -168,15 +120,6 @@ class Training extends React.Component {
 							<option key={userID} value={userID}>{this.props.users[userID]}</option>
 						)}
 					</select>
-					<Select.Async
-						// todo: value doesn't show up on page load.
-						name="blogPost"
-						value={this.props.training.blogPost}
-						loadOptions={this.getBlogPostOptions}
-						onChange={this.updateBlogPost}
-						simpleValue={true}
-						placeholder="Blog Post"
-					/>
 					{doneButton}
 				</form>
 			</div>

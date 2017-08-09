@@ -67,13 +67,8 @@ class SuggestedTrainings extends React.Component {
 	}
 
 	render() {
-
-		const tempStyles = {
-			border: '1px solid orange',
-		};
-
 		return(
-			<div className="trainings suggested" style={tempStyles}>
+			<div className="trainings suggested">
 				<span>Suggested Trainings</span>
 				{this.getNewTrainingSection()}
 				{this.getSuggestedTrainings().map(training =>
