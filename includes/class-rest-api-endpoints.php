@@ -278,7 +278,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				'timestamp'      => get_post_meta( $training_post->ID, $this->prefix . 'timestamp', true ),
 				'discussionLead' => get_post_meta( $training_post->ID, $this->prefix . 'discussion_lead', true ),
 				'suggestedBy'    => get_post_meta( $training_post->ID, $this->prefix . 'suggested_by', true ),
-				'blogPost'       => get_post_meta( $training_post->ID, $this->prefix . 'blog_post', true ),
 				'upvotedBy'      => get_post_meta( $training_post->ID, $this->prefix . 'upvoted_by', true ) ?: array(),
 			);
 		}
@@ -396,7 +395,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				case 'timestamp':
 				case 'discussionLead':
 				case 'suggestedBy':
-				case 'blogPost':
 				case 'upvotedBy':
 					$this->update_training_post_meta( $training_id, $key, $value );
 			}
@@ -455,7 +453,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return array(
 				'discussionLead' => 'discussion_lead',
 				'suggestedBy'    => 'suggested_by',
-				'blogPost'       => 'blog_post',
 				'upvotedBy'      => 'upvoted_by',
 			);
 		}

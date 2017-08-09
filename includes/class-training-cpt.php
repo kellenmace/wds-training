@@ -110,40 +110,12 @@ class WDST_Training_CPT extends CPT_Core {
 		) );
 
 		$training_metabox->add_field( array(
-			'name' => __( 'Blog Post', 'wds-training' ),
-			'desc' => __( 'The blog post associated with this training', 'wds-training' ),
-			'id'   => $prefix . 'blog_post',
-			'type' => 'pw_select',
-			'options' => $this->get_posts(),
-		) );
-
-		$training_metabox->add_field( array(
 			'name'    => __( 'Upvoted By', 'wds-training' ),
 			'desc'    => __( 'The people who upvoted this topic', 'wds-training' ),
 			'id'      => $prefix . 'upvoted_by',
 			'type'    => 'pw_multiselect',
 			'options' => $this->get_users(),
 		) );
-	}
-
-	/**
-	 * Get all posts in the format: post ID => post title.
-	 *
-	 * @since  1.0.0
-	 *
-	 * @return array The posts.
-	 */
-	public function get_posts() {
-
-		global $wpdb;
-
-		$post_objects = $wpdb->get_results( "SELECT ID, post_title FROM wp_posts WHERE post_type = 'post' AND post_status = 'publish'" ); // WPCS: db call ok.
-
-		if ( ! $post_objects ) {
-			return array();
-		}
-
-		return wp_list_pluck( $post_objects, 'post_title', 'ID' );
 	}
 
 	/**
