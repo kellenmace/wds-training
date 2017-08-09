@@ -68,6 +68,7 @@ class Training extends React.Component {
 
 		const tempTrainingStyles = {
 			border: '1px solid blue',
+			margin: '20px',
 		};
 
 		// todo: move this into methods.
