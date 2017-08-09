@@ -12,7 +12,7 @@ class App extends React.Component {
     constructor() {
         super();
 
-        // Allows you to use "this" in these methods to refer to the App component.
+        // Allows you to use "this" in methods to refer to the App component.
 		this.updateCurrentView = this.updateCurrentView.bind(this);
 		this.updateTraining = this.updateTraining.bind(this);
 		this.updateTrainingUpvotes = this.updateTrainingUpvotes.bind(this);
@@ -389,9 +389,7 @@ class App extends React.Component {
 
 		return(
 			<div className="wds-training-container" style={tempAppBorder}>
-				<Nav updateCurrentView={this.updateCurrentView} />
-				<br />
-				<p>* * *</p>
+				<Nav currentView={this.state.currentView} updateCurrentView={this.updateCurrentView} />
 				{this.getView()}
 			</div>
 		)

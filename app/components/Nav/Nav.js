@@ -11,9 +11,9 @@ class Nav extends React.Component {
 		return(
 			<div className="nav-container" style={tempNavBorder}>
 				<ul className="nav">
-					<NavItem label="Past" updateCurrentView={this.props.updateCurrentView} viewName="pastTrainings"/>
-					<NavItem label="Suggested" updateCurrentView={this.props.updateCurrentView} viewName="suggestedTrainings"/>
-					<NavItem label="Upcoming" updateCurrentView={this.props.updateCurrentView} viewName="upcomingTrainings"/>
+					<NavItem label="Past" currentView={this.props.currentView} updateCurrentView={this.props.updateCurrentView} viewName="pastTrainings"/>
+					<NavItem label="Suggested" currentView={this.props.currentView} updateCurrentView={this.props.updateCurrentView} viewName="suggestedTrainings"/>
+					<NavItem label="Upcoming" currentView={this.props.currentView} updateCurrentView={this.props.updateCurrentView} viewName="upcomingTrainings"/>
 				</ul>
 			</div>
 		)
