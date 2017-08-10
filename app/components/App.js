@@ -155,12 +155,9 @@ class App extends React.Component {
 
 	// Update a training on the server.
 	updateTrainingPost( trainingID, key, value ) {
-
-		axios.post(WDSTTrainingData.RESTBaseURL + trainingID, {
-				headers: { 'X-WP-Nonce': WDSTTrainingData.nonce },
-				key,
-				value
-			})
+		axios.post(WDSTTrainingData.RESTBaseURL + trainingID,
+			{ key, value },
+			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
 			.catch(function (error) {
 				console.log(error);
 			});
@@ -265,9 +262,11 @@ class App extends React.Component {
 
 	// Delete a training on the server.
 	deleteTrainingOnServer( trainingID ) {
-		return axios.delete(WDSTTrainingData.RESTBaseURL + trainingID, {
-			headers: { 'X-WP-Nonce': WDSTTrainingData.nonce }
-		});
+		axios.delete(WDSTTrainingData.RESTBaseURL + trainingID,
+			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
+			.catch(function (error) {
+				console.log(error);
+			});
 	}
 
 	// Create a new training on the server, then add it to the front end app.
@@ -290,11 +289,12 @@ class App extends React.Component {
 
 	// Create a new training on the server.
 	createTrainingOnServer() {
-		return axios.post(WDSTTrainingData.RESTBaseURL, {
-			headers: { 'X-WP-Nonce': WDSTTrainingData.nonce },
-			postTitle: '',
-			postContent: '',
-		});
+		return axios.post(WDSTTrainingData.RESTBaseURL,
+			{ postTitle: '', postContent: '' },
+			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
+			.catch(function (error) {
+				console.log(error);
+			});
 	}
 
 	// Add a new training to the state.
@@ -342,6 +342,7 @@ class App extends React.Component {
 		return training.hasOwnProperty( 'isNewlyCreatedTraining' ) && true === training.isNewlyCreatedTraining;
 	}
 
+	// Get the current view.
 	getView() {
 
 		if ( 'pastTrainings' === this.state.currentView ) {
@@ -419,11 +420,11 @@ export default App;
 // }
 //
 // fetchRecentlyUpdatedTrainings() {
-// 	return axios.get(WDSTTrainingData.RESTBaseURL, {
-// 		headers: { 'X-WP-Nonce': WDSTTrainingData.nonce },
-// 		args: {
-// 			orderby: 'modified',
-// 			posts_per_page: '20'
-// 		}
-// 	});
+// 	// remove this delete and replace with a .then() callback.
+// 	return axios.get(WDSTTrainingData.RESTBaseURL,
+// 		{ orderby: 'modified', posts_per_page: '20' },
+// 		{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
+// 		.catch(function (error) {
+// 			console.log(error);
+// 		});
 // }

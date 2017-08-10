@@ -17,10 +17,12 @@ class Training extends React.Component {
 		event.preventDefault();
 	}
 
+	// Get the ID to use for the training container div.
 	getTrainingDivID() {
 		return 'training-' + this.props.training.ID;
 	}
 
+	// Get the ID to use for the training form element.
 	getTrainingFormID() {
 		return 'training-form-' + this.props.training.ID;
 	}
@@ -40,6 +42,7 @@ class Training extends React.Component {
 		return 'suggestedBy-' + this.props.training.ID;
 	}
 
+	// Update a training's timestamp.
 	updateTimestamp(momentObject) {
 
 		// We have to build an object that mimics an event object, since react-datetime
@@ -95,7 +98,7 @@ class Training extends React.Component {
 									<CSSTransition
 										key={this.props.training.upvotedBy.length}
 										classNames="upvotes"
-										timeout={{ enter: 5000, exit: 5000 }}//todo: change back to 250
+										timeout={{ enter: 250, exit: 250 }}
 									>
 										<span key={this.props.training.upvotedBy.length}>{this.props.training.upvotedBy.length}</span>
 									</CSSTransition>

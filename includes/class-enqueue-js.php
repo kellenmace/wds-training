@@ -66,7 +66,7 @@ class WDST_Enqueue_JS {
 
 		wp_enqueue_script( 'wds-training', $this->plugin->url . 'dist/scripts.min.js', array(), '1.0.0', true );
 
-		wp_add_inline_script( 'wds-training', $this->get_app_data_as_json(), 'before' );
+		wp_localize_script( 'wds-training', 'WDSTTrainingData', $this->get_app_data() );
 	}
 
 	/**
@@ -76,16 +76,6 @@ class WDST_Enqueue_JS {
 	 */
 	private function is_wds_training_page_template_being_used() {
 		return 'wds-training-template.php' === basename( get_page_template_slug() );
-	}
-
-	/**
-	 * Get the app data to send to the front end for use in JS.
-	 *
-	 * @since  1.0.0
-	 * @return string The app data in JSON format.
-	 */
-	private function get_app_data_as_json() {
-		return 'var WDSTTrainingData = ' . wp_json_encode( $this->get_app_data() );
 	}
 
 	/**

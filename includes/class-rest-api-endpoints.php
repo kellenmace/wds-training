@@ -169,12 +169,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 					),
 				)
 			);
-
-			// Get the item's schema for display / public consumption purposes.
-			register_rest_route( $this->namespace, '/' . $this->rest_base . '/schema', array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_public_item_schema' ),
-			) );
 		}
 
 		/**
@@ -303,7 +297,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @param  WP_REST_Request $request Full details about the request.
 		 */
 		public function get_items_permission_check( $request ) {
-			return true; //return current_user_can( 'read' );
+			return current_user_can( 'read' );
 		}
 
 		/**
@@ -331,6 +325,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 
 			$training_data = $this->get_training_data( $training_id );
 
+			$this->delete_all_trainings_transient();
+
 			return new WP_REST_Response( $training_data, 201 );
 		}
 
@@ -342,7 +338,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @param  WP_REST_Request $request Full details about the request.
 		 */
 		public function create_item_permissions_check( $request ) {
-			return true; //return current_user_can( 'publish_posts' );
+			return current_user_can( 'publish_posts' );
 		}
 
 		/**
@@ -355,6 +351,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		public function get_item( $request ) {
 
 			$training_id = absint( $request->get_param( 'id' ) );
+
+			// todo: build out this method.
 		}
 
 		/**
@@ -365,7 +363,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @param  WP_REST_Request $request Full details about the request.
 		 */
 		public function get_item_permissions_check( $request ) {
-			return true; //return current_user_can( 'read' );
+			return current_user_can( 'read' );
 		}
 
 		/**
@@ -465,7 +463,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @param  WP_REST_Request $request Full details about the request.
 		 */
 		public function update_item_permissions_check( $request ) {
-			return true; //return current_user_can( 'edit_others_posts' );
+			return current_user_can( 'edit_others_posts' );
 		}
 
 		/**
@@ -484,6 +482,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 				return new WP_REST_Response( "Unable to delete the training with ID {$training_id}", 500 );
 			}
 
+			$this->delete_all_trainings_transient();
+
 			return new WP_REST_Response( "Successfuly deleted training {$training_id}", 200 );
 		}
 
@@ -495,14 +495,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @param  WP_REST_Request $request Full details about the request.
 		 */
 		public function delete_item_permissions_check( $request ) {
-			return true; //return current_user_can( 'delete_others_posts' );
+			return current_user_can( 'delete_others_posts' );
 		}
-
-		/**
-		 * Get item schema.
-		 *
-		 * @since  1.0.0
-		 */
-		public function get_public_item_schema() {}
 	}
 }

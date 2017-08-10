@@ -61,7 +61,7 @@ This button is only displayed on newly created trainings. When clicked, it remov
 Installation
 ------------
 
-1. Clone the repo into the ``/plugins/` directory of a local WordPress site and activate the plugin.
+1. Clone the repo into the `/plugins/` directory of a local WordPress site and activate the plugin.
 2. Create a new 'Training' page in WordPress and assign the `WDS Training` page template to it.
 3. Visit the training page on the front end.
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WDS Training
- * Description: WDS training schedule, recommendations and voting system.
+ * Description: Frontend app for WDS to manage, suggest and upvote internal trainings.
  * Version:     1.0.0
  * Author:      Kellen Mace
  * Author URI:  https://webdevstudios.com/
