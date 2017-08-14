@@ -49,10 +49,6 @@ This dropdown is used to specify which user on the site will/did lead the discus
 
 This dropdown is used to specify which user on the site suggested this training topic.
 
-**Blog Post**
-
-This typeahead search field can be used to link a blog post on the current site to this training. As users type, blog posts whose titles match their search query will populate the dropdown field.
-
 **Done button**
 
 This button is only displayed on newly created trainings. When clicked, it removes the training from pending status and causes it to appear in either the past/suggested/upvoming view based on its date.
