@@ -94,12 +94,12 @@ final class WDS_Training {
 	protected $training_cpt = null;
 
 	/**
-	 * Instance of WDST_Enqueue_JS
+	 * Instance of WDST_Enqueue_Assets
 	 *
 	 * @since 1.0.0
-	 * @var   WDST_Enqueue_JS
+	 * @var   WDST_Enqueue_Assets
 	 */
-	protected $enqueue_js = null;
+	protected $enqueue_assets = null;
 
 	/**
 	 * Instance of WDST_Rest_Api_Endpoints
@@ -142,7 +142,7 @@ final class WDS_Training {
 	public function plugin_classes() {
 		$this->page_template      = new WDST_Page_Template( $this );
 		$this->training_cpt       = new WDST_Training_CPT( $this );
-		$this->enqueue_js         = new WDST_Enqueue_JS( $this );
+		$this->enqueue_assets     = new WDST_Enqueue_Assets( $this );
 		$this->rest_api_endpoints = new WDST_Rest_Api_Endpoints( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
@@ -208,7 +208,7 @@ final class WDS_Training {
 			case 'path':
 			case 'page_template':
 			case 'training_cpt':
-			case 'enqueue_js':
+			case 'enqueue_assets':
 			case 'rest_api_endpoints':
 				return $this->$field;
 			default:

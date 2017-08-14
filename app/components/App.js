@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Nav from './Nav/Nav';
+import LoginMessage from './LoginMessage/LoginMessage';
 import PastTrainings from './Trainings/PastTrainings';
 import UpcomingTrainings from './Trainings/UpcomingTrainings';
 import SuggestedTrainings from './Trainings/SuggestedTrainings';
@@ -344,6 +345,10 @@ class App extends React.Component {
 
 	// Get the current view.
 	getView() {
+
+		if ( 'false' === WDSTTrainingData.isUserLoggedIn ) {
+			return <LoginMessage />
+		}
 
 		if ( 'pastTrainings' === this.state.currentView ) {
 			return <PastTrainings

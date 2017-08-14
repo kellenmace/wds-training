@@ -7,11 +7,11 @@
  */
 
 /**
- * WDS Training Enqueue JS
+ * WDS Training Enqueue Assets
  *
  * @since 1.0.0
  */
-class WDST_Enqueue_JS {
+class WDST_Enqueue_Assets {
 	/**
 	 * Parent plugin class.
 	 *
@@ -86,11 +86,13 @@ class WDST_Enqueue_JS {
 	 */
 	public function get_app_data() {
 		return array(
-			'RESTBaseURL'   => esc_url_raw( $this->plugin->rest_api_endpoints->rest_base_url ),
-			'currentUserID' => get_current_user_id(),
-			'nonce'         => wp_create_nonce( 'wp_rest' ),
-			'trainings'     => $this->plugin->rest_api_endpoints->get_trainings_data(),
-			'users'         => $this->get_user_data(),
+			'RESTBaseURL'    => esc_url_raw( $this->plugin->rest_api_endpoints->rest_base_url ),
+			'isUserLoggedIn' => is_user_logged_in() ? 'true' : 'false',
+			'currentUserID'  => get_current_user_id(),
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'loginURL'       => wp_login_url( get_permalink() ),
+			'trainings'      => $this->plugin->rest_api_endpoints->get_trainings_data(),
+			'users'          => $this->get_user_data(),
 		);
 	}
 
