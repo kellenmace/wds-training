@@ -1,31 +1,244 @@
 @import "vendor/react-datetime.css";
 @import "vendor/react-select.css";
+@import "utilities/variables.scss";
 
+//-----------------------------------------
+// Global
+//-----------------------------------------
 body {
-  background: #ddd;
-  &:fullscreen a {
-    display: flex
-  }
-}
+	background: $color-gainsboro;
 
+	* {
+		box-sizing: border-box;
+	}
+} // body
+
+#app {
+	background-color: $color-white;
+	padding: 16px 15px 16px 14px;
+	width: calc(100% - 242px); // for make theme only.
+} // #app
+
+
+//-----------------------------------------
+// Nav Container
+//-----------------------------------------
+.nav-container {
+
+	// <ul>
+	.nav {
+		list-style: none;
+		margin: 0 0 15px;
+		padding: 0;
+
+		// <li>
+		.nav-item {
+			background-color: $color-alabaster;
+			border: 1px solid $color-white-smoke;
+			border-radius: 4px;
+			cursor: default;
+			display: inline-block;
+			font-size: 12px;
+			margin-right: 5px;
+			padding: 4px 6px;
+			transition: background-color 0.3s ease-in-out;
+
+			a {
+				color: $color-black;
+				text-decoration: none;
+
+				&:hover,
+				&:focus,
+				&:active {
+					border: 0;
+					text-decoration: none;
+				} // &:hover, &:focus, &:active
+			} // a
+
+			&:hover,
+			&:focus,
+			&:active {
+				background-color: $color-gainsboro;
+			} // &:hover, &:focus, &:active
+
+			&.active {
+				background-color: $color-gallery;
+			} // &.active
+
+			&:last-child {
+				margin-right: 0;
+			} // &:last-child
+		} // .nav-item
+	} // .nav
+} // .nav-container
+
+
+//-----------------------------------------
+// Buttons
+//-----------------------------------------
+.button {
+
+	&--delete,
+	&--done {
+		float: right;
+	} // &--delete, &--done
+} // .button
+
+
+//-----------------------------------------
+// Forms
+//-----------------------------------------
+.form-addnew {
+	margin-bottom: 15px;
+} // .form-addnew
+
+
+//-----------------------------------------
+// Training
+//-----------------------------------------
+.training {
+	border: 1px solid $color-gallery;
+	border-radius: 4px;
+	margin-bottom: 25px;
+	padding: 15px;
+	width: 100%;
+
+	&:last-child {
+		margin-bottom: 0;
+	} // &:last-child
+
+	.top-bar {
+		height: 28px;
+	} // .top-bar
+
+	.middle-bar {
+		height: 95px;
+
+		.rdtOpen .rdtPicker {
+			left: calc(50% + 6px);
+			width: calc(50% - 7px);
+		} // .rdtOpen .rdtPicker 
+
+		input {
+			float: left;
+			margin-bottom: 5px;
+			width: calc(50% - 5px);
+
+			&.form-control {
+				margin-left: 10px;
+			} // &:first-of-type
+		} // input
+
+		textarea {
+			background-color: $color-alabaster;
+			border-color: $color-light-gray;
+			float: right;
+			font-size: 13px;
+			height: 61px;
+			line-height: 16px;
+			padding: 5px 7px;
+			width: 100%;
+		} // textarea
+	} // .middle-bar
+
+	.top-bar,
+	.middle-bar {
+		margin-bottom: 15px;
+	} // .top-bar, .middle-bar
+
+	.bottom-bar {
+		height: 28px;
+		line-height: 28px;
+
+		// Form Labels
+		label {
+			margin-right: 5px;
+		} // label
+
+		.select-container {
+			display: inline-block;
+
+			&:first-of-type {
+				margin-right: 15px;
+			} // &:first-of-type
+		} // .select-container
+	} // .bottom-bar
+} // .training
+
+
+//-----------------------------------------
+// Top Bar
+//-----------------------------------------
+.upvoted-by {
+	float: left;
+} // .upvoted-by
+
+.upvoted-count {
+	display: block;
+	float: left;
+	font-size: 12px;
+	height: 28px;
+	line-height: 28px;
+	margin-right: 10px;
+	text-align: right;
+
+	.upvoted-container {
+		margin-right: 5px;
+		position: relative;
+
+		.upvotes-enter {
+			bottom: auto;
+			left: auto;
+			opacity: 1;
+			right: auto;
+			top: 0;
+
+			&.upvotes-enter-active {
+				opacity: 0;
+				top: -50px;
+				transition: top 0.4s, opacity 0.2s ease-in-out;
+			} // &.upvotes-enter-active
+		} // .upvotes-enter
+
+		.upvotes-exit {
+			bottom: auto;
+			left: auto;
+			opacity: 1;
+			position: relative;
+			right: auto;
+			top: 0;
+
+			&.upvotes-leave-active {
+				opacity: 0;
+				top: -50px;
+				transition: top 0.4s, opacity 0.2s ease-in-out;
+			} // &.upvotes-leave-active
+		} // .upvotes-leave
+	} // .upvoted-container
+} // .upvoted-count
+
+
+//-----------------------------------------
+// Upvotes
+//-----------------------------------------
 .upvotes-enter {
-  position: absolute;
-  transition: all 2.5s;
-  transform: translateY(100%);
+	position: absolute;
+	transform: translateY(100%);
+	transition: transform 2.5s;
 
-  &.upvotes-enter-active {
-    transform: translateY(0);
-  }
-}
+	&.upvotes-enter-active {
+		transform: translateY(0);
+	} // &.upvotes-enter-active
+} // .upvotes-enter
 
 .upvotes-exit {
-  position: absolute;
-  transition: all 2.5s;
-  //left: 0;
-  //bottom: 0;
-  transform: translateY(0);
+	//bottom: 0;
+	//left: 0;
+	position: absolute;
+	transform: translateY(0);
+	transition: transform 2.5s;
 
-  &.upvotes-exit-active {
-    transform: translateY(-100%);
-  }
-}
+	&.upvotes-exit-active {
+		transform: translateY(-100%);
+	} // &.upvotes-exit-active
+} // .upvotes-exit
