@@ -7,8 +7,6 @@ class Training extends React.Component {
 	constructor() {
 		super();
 
-		this.getTrainingDivID = this.getTrainingDivID.bind(this);
-		this.getTrainingFormID = this.getTrainingFormID.bind(this);
 		this.updateTimestamp = this.updateTimestamp.bind(this);
 	}
 
@@ -25,6 +23,26 @@ class Training extends React.Component {
 	// Get the ID to use for the training form element.
 	getTrainingFormID() {
 		return 'training-form-' + this.props.training.ID;
+	}
+
+	// Get the text for the upvote button.
+	getUpvoteButtonText() {
+		return this.hasCurrentUserUpvoted() ? 'Upvoted \u2713' : 'Upvote \u2191';
+	}
+
+	// Has the current user upvoted this training?
+	hasCurrentUserUpvoted() {
+		return -1 !== this.props.training.upvotedBy.indexOf( WDSTTrainingData.currentUserID );
+	}
+
+	// Get the text for the delete button.
+	getDeleteButtonText() {
+		return this.isPendingDeletion() ? 'Delete Training' : 'X';
+	}
+
+	// Is this training currently pending deletion?
+	isPendingDeletion() {
+		return this.props.training.hasOwnProperty( 'pendingDeletion' ) && true === this.props.training.pendingDeletion;
 	}
 
 	// Get a training's timestamp in the form of a Moment object.
@@ -48,14 +66,13 @@ class Training extends React.Component {
 		// We have to build an object that mimics an event object, since react-datetime
 		// doesn't provide the actual select onChange event. More info here:
 		// https://github.com/YouCanBookMe/react-datetime/issues/301
-
-		const formID = this.getTrainingFormID();
-
 		const event = {
 			target: {
 				name: 'timestamp',
 				value: this.getTimestampFromMomentObject(momentObject),
-				closest: () => { return { id: formID  }; }
+				closest: () => {
+					return { id: this.getTrainingFormID() };
+				}
 			}
 		};
 
@@ -67,6 +84,16 @@ class Training extends React.Component {
 		return momentObject ? momentObject.unix() : '';
 	}
 
+	// Get the "Done" button.
+	getDoneButton() {
+		// Only display done button if this is a newly created training.
+		if ( this.props.isNewlyCreatedTraining( this.props.training) ) {
+			return <button type="button" name="done" ref="button" onClick={this.props.removeNewlyCreatedTrainingProperty}>DONE</button>;
+		}
+
+		return '';
+	}
+
 	render() {
 
 		const tempTrainingStyles = {
@@ -74,25 +101,11 @@ class Training extends React.Component {
 			margin: '20px',
 		};
 
-		// todo: move this into methods.
-		const hasCurrentUserUpvoted = -1 !== this.props.training.upvotedBy.indexOf( WDSTTrainingData.currentUserID );
-		const voteStatus = hasCurrentUserUpvoted ? 'Upvoted \u2713' : 'Upvote \u2191';
-
-		//const deleteButtonStatus = this.props.training.hasOwnProperty( 'confirmingDeletion' ) && true === this.props.training.confirmingDeletion ? 'confirmingDeletion' : '';
-		const deleteButtonText = this.props.training.hasOwnProperty( 'pendingDeletion' ) && true === this.props.training.pendingDeletion ? 'Delete Training' : 'X';
-
-		let doneButton = '';
-		if ( this.props.isNewlyCreatedTraining( this.props.training) ) {
-			doneButton = <button type="button" name="done" ref="button" onClick={this.props.removeNewlyCreatedTrainingProperty}>DONE</button>;
-		}
-
-		// todo: break some of these form fields out into their own components
-
 		return(
 			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past" style={tempTrainingStyles}>
 				<form id={this.getTrainingFormID()} className="training-form" onSubmit={this.handleSubmit}>
 					<div className="top-bar">
-						<button name="upvotedBy" onClick={this.props.updateTrainingUpvotes}>{voteStatus}</button>
+						<button name="upvotedBy" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
 							<span>
 								<TransitionGroup component="span">
 									<CSSTransition
@@ -105,7 +118,7 @@ class Training extends React.Component {
 								</TransitionGroup>
 								 Upvotes
 							</span>
-						<button type="button" name="delete" ref="button" onClick={this.props.deleteTraining}>{deleteButtonText}</button>
+						<button type="button" name="delete" ref="button" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
 					</div>
 					<input type="text" name="title" value={this.props.training.title} placeholder="Title" onChange={this.props.updateTraining} />
 					<textarea name="content" value={this.props.training.content} placeholder="Description" onChange={this.props.updateTraining} />
@@ -124,7 +137,7 @@ class Training extends React.Component {
 							<option key={userID} value={userID}>{this.props.users[userID]}</option>
 						)}
 					</select>
-					{doneButton}
+					{this.getDoneButton()}
 				</form>
 			</div>
 		)
