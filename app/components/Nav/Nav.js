@@ -4,12 +4,8 @@ import NavItem from './NavItem';
 class Nav extends React.Component {
 	render() {
 
-		const tempNavBorder = {
-			border: '1px solid #eee',
-		};
-
 		return(
-			<div className="nav-container" style={tempNavBorder}>
+			<div className="nav-container">
 				<ul className="nav">
 					<NavItem label="Past" currentView={this.props.currentView} updateCurrentView={this.props.updateCurrentView} viewName="pastTrainings"/>
 					<NavItem label="Suggested" currentView={this.props.currentView} updateCurrentView={this.props.updateCurrentView} viewName="suggestedTrainings"/>

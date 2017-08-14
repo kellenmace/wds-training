@@ -389,12 +389,8 @@ class App extends React.Component {
 
 	render() {
 
-		const tempAppBorder = {
-			border: '3px solid #eee',
-		};
-
 		return(
-			<div className="wds-training-container" style={tempAppBorder}>
+			<div className="wds-training-container">
 				<Nav currentView={this.state.currentView} updateCurrentView={this.updateCurrentView} />
 				{this.getView()}
 			</div>
