@@ -88,7 +88,7 @@ class Training extends React.Component {
 	getDoneButton() {
 		// Only display done button if this is a newly created training.
 		if ( this.props.isNewlyCreatedTraining( this.props.training) ) {
-			return <button type="button" name="done" ref="button" onClick={this.props.removeNewlyCreatedTrainingProperty}>DONE</button>;
+			return <button type="button" name="done" ref="button" className="button--done" onClick={this.props.removeNewlyCreatedTrainingProperty}>DONE</button>;
 		}
 
 		return '';
@@ -96,48 +96,55 @@ class Training extends React.Component {
 
 	render() {
 
-		const tempTrainingStyles = {
-			border: '1px solid blue',
-			margin: '20px',
-		};
-
 		return(
-			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past" style={tempTrainingStyles}>
+			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past">
 				<form id={this.getTrainingFormID()} className="training-form" onSubmit={this.handleSubmit}>
-					<div className="top-bar">
-						<button name="upvotedBy" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
-							<span>
-								<TransitionGroup component="span">
-									<CSSTransition
-										key={this.props.training.upvotedBy.length}
-										classNames="upvotes"
-										timeout={{ enter: 250, exit: 250 }}
-									>
-										<span key={this.props.training.upvotedBy.length}>{this.props.training.upvotedBy.length}</span>
-									</CSSTransition>
-								</TransitionGroup>
-								 Upvotes
-							</span>
-						<button type="button" name="delete" ref="button" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
+					<div className="top-bar clearfix">
+						<span className="upvoted-count">
+							<TransitionGroup component="span" className="upvoted-container">
+								<CSSTransition
+									key={this.props.training.upvotedBy.length}
+									classNames="upvotes"
+									timeout={{ enter: 250, exit: 250 }}
+								>
+									<span key={this.props.training.upvotedBy.length}>{this.props.training.upvotedBy.length}</span>
+								</CSSTransition>
+							</TransitionGroup>
+								Upvotes
+						</span>
+						<button name="upvotedBy" className="upvoted-by" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
+						<button type="button" name="delete" ref="button" className="button--delete" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
 					</div>
-					<input type="text" name="title" value={this.props.training.title} placeholder="Title" onChange={this.props.updateTraining} />
-					<textarea name="content" value={this.props.training.content} placeholder="Description" onChange={this.props.updateTraining} />
-					<Datetime name="timestamp" value={this.getMomentObject()} inputProps={{placeholder: "Date and Time"}} onChange={this.updateTimestamp} />
-					<label htmlFor={this.getDiscussionLeadID}>Discussion Lead</label>
-					<select id={this.getDiscussionLeadID} name="discussionLead" value={this.props.training.discussionLead} onChange={this.props.updateTraining}>
-						<option>Select User</option>
-						{Object.keys( this.props.users ).map(userID =>
-							<option key={userID} value={userID}>{this.props.users[userID]}</option>
-						)}
-					</select>
-					<label htmlFor={this.getSuggestedByID}>Suggested By</label>
-					<select id={this.getSuggestedByID} name="suggestedBy" value={this.props.training.suggestedBy} onChange={this.props.updateTraining}>
-						<option>Select User</option>
-						{Object.keys( this.props.users ).map(userID =>
-							<option key={userID} value={userID}>{this.props.users[userID]}</option>
-						)}
-					</select>
-					{this.getDoneButton()}
+
+					<div className="middle-bar">
+						<input type="text" name="title" value={this.props.training.title} placeholder="Title" onChange={this.props.updateTraining} />
+						<Datetime name="timestamp" value={this.getMomentObject()} inputProps={{placeholder: "Date and Time"}} onChange={this.updateTimestamp} />
+						<textarea name="content" value={this.props.training.content} placeholder="Description" onChange={this.props.updateTraining} />
+					</div>
+
+					<div className="bottom-bar">
+						<div className="select-container">
+							<label htmlFor={this.getDiscussionLeadID}>Discussion Lead</label>
+							<select id={this.getDiscussionLeadID} name="discussionLead" value={this.props.training.discussionLead} onChange={this.props.updateTraining}>
+							<option>Select User</option>
+							{Object.keys( this.props.users ).map(userID =>
+								<option key={userID} value={userID}>{this.props.users[userID]}</option>
+							)}
+							</select>
+						</div>
+
+						<div className="select-container">
+							<label htmlFor={this.getSuggestedByID}>Suggested By</label>
+							<select id={this.getSuggestedByID} name="suggestedBy" value={this.props.training.suggestedBy} onChange={this.props.updateTraining}>
+								<option>Select User</option>
+								{Object.keys( this.props.users ).map(userID =>
+									<option key={userID} value={userID}>{this.props.users[userID]}</option>
+								)}
+							</select>
+						</div>
+
+						{this.getDoneButton()}
+					</div>
 				</form>
 			</div>
 		)
