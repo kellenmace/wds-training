@@ -586,33 +586,144 @@ td.rdtYear:hover {
 	}
 }body {
   background: #ddd; }
-  body:-webkit-full-screen a {
-    display: -webkit-box;
-    display: flex; }
-  body:-moz-full-screen a {
-    display: flex; }
-  body:-ms-fullscreen a {
-    display: -ms-flexbox;
-    display: flex; }
-  body:fullscreen a {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex; }
+  body * {
+    box-sizing: border-box; }
+
+#app {
+  background-color: #fff;
+  padding: 16px 15px 16px 14px;
+  width: calc(100% - 242px); }
+
+.nav-container .nav {
+  list-style: none;
+  margin: 0 0 15px;
+  padding: 0; }
+  .nav-container .nav .nav-item {
+    background-color: #fafafa;
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    cursor: default;
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 5px;
+    padding: 4px 6px;
+    transition: background-color 0.3s ease-in-out; }
+    .nav-container .nav .nav-item a {
+      color: #000;
+      text-decoration: none; }
+      .nav-container .nav .nav-item a:hover, .nav-container .nav .nav-item a:focus, .nav-container .nav .nav-item a:active {
+        border: 0;
+        text-decoration: none; }
+    .nav-container .nav .nav-item:hover, .nav-container .nav .nav-item:focus, .nav-container .nav .nav-item:active {
+      background-color: #ddd; }
+    .nav-container .nav .nav-item.active {
+      background-color: #f0f0f0; }
+    .nav-container .nav .nav-item:last-child {
+      margin-right: 0; }
+
+.button--delete, .button--done {
+  float: right; }
+
+.form-addnew {
+  margin-bottom: 15px; }
+
+.training {
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  padding: 15px;
+  width: 100%; }
+  .training:last-child {
+    margin-bottom: 0; }
+  .training .top-bar {
+    height: 28px; }
+  .training .middle-bar {
+    height: 95px; }
+    .training .middle-bar .rdtOpen .rdtPicker {
+      left: calc(50% + 6px);
+      width: calc(50% - 7px); }
+    .training .middle-bar input {
+      float: left;
+      margin-bottom: 5px;
+      width: calc(50% - 5px); }
+      .training .middle-bar input.form-control {
+        margin-left: 10px; }
+    .training .middle-bar textarea {
+      background-color: #fafafa;
+      border-color: #d1d1d1;
+      float: right;
+      font-size: 13px;
+      height: 61px;
+      line-height: 16px;
+      padding: 5px 7px;
+      width: 100%; }
+  .training .top-bar,
+  .training .middle-bar {
+    margin-bottom: 15px; }
+  .training .bottom-bar {
+    height: 28px;
+    line-height: 28px; }
+    .training .bottom-bar label {
+      margin-right: 5px; }
+    .training .bottom-bar .select-container {
+      display: inline-block; }
+      .training .bottom-bar .select-container:first-of-type {
+        margin-right: 15px; }
+
+.upvoted-by {
+  float: left; }
+
+.upvoted-count {
+  display: block;
+  float: left;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  margin-right: 10px;
+  text-align: right; }
+  .upvoted-count .upvoted-container {
+    margin-right: 5px;
+    position: relative; }
+    .upvoted-count .upvoted-container .upvotes-enter {
+      bottom: auto;
+      left: auto;
+      opacity: 1;
+      right: auto;
+      top: 0; }
+      .upvoted-count .upvoted-container .upvotes-enter.upvotes-enter-active {
+        opacity: 0;
+        top: -50px;
+        transition: top 0.4s, opacity 0.2s ease-in-out; }
+    .upvoted-count .upvoted-container .upvotes-exit {
+      bottom: auto;
+      left: auto;
+      opacity: 1;
+      position: relative;
+      right: auto;
+      top: 0; }
+      .upvoted-count .upvoted-container .upvotes-exit.upvotes-leave-active {
+        opacity: 0;
+        top: -50px;
+        transition: top 0.4s, opacity 0.2s ease-in-out; }
 
 .upvotes-enter {
   position: absolute;
-  transition: all 2.5s;
   -webkit-transform: translateY(100%);
-          transform: translateY(100%); }
+          transform: translateY(100%);
+  transition: -webkit-transform 2.5s;
+  transition: transform 2.5s;
+  transition: transform 2.5s, -webkit-transform 2.5s; }
   .upvotes-enter.upvotes-enter-active {
     -webkit-transform: translateY(0);
             transform: translateY(0); }
 
 .upvotes-exit {
   position: absolute;
-  transition: all 2.5s;
   -webkit-transform: translateY(0);
-          transform: translateY(0); }
+          transform: translateY(0);
+  transition: -webkit-transform 2.5s;
+  transition: transform 2.5s;
+  transition: transform 2.5s, -webkit-transform 2.5s; }
   .upvotes-exit.upvotes-exit-active {
     -webkit-transform: translateY(-100%);
             transform: translateY(-100%); }

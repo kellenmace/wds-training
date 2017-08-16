@@ -33,15 +33,8 @@ class NavItem extends React.Component {
 
 	render() {
 
-		const tempNavItemStyles = {
-			border: '1px solid #bbb',
-			width: '33%',
-			float: 'left',
-			listStyle: 'none',
-		};
-
 		return(
-			<li className={this.getClasses( this.props.viewName )} style={tempNavItemStyles} onClick={this.handleNavItemClick}>
+			<li className={this.getClasses( this.props.viewName )} onClick={this.handleNavItemClick}>
 				<a href="#" onClick={this.handleNavItemLinkClick}>{this.props.label}</a>
 			</li>
 		)

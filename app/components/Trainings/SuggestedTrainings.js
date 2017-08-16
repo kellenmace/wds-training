@@ -51,8 +51,8 @@ class SuggestedTrainings extends React.Component {
 		}
 
 		// Else, show the Add New Training button.
-		return <form onSubmit={this.handleSubmit}>
-			<button type="button" onClick={this.props.addNewTraining}>+ Add New</button>
+		return <form onSubmit={this.handleSubmit} className="form-addnew">
+			<button type="button" className="button button-addnew" onClick={this.props.addNewTraining}>+ Add New</button>
 		</form>;
 	}
 
