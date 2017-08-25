@@ -56,12 +56,12 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 */
 		public function __get( $field ) {
 
-		if ( property_exists( $this, $field ) ) {
-			return $this->$field;
-		}
+			if ( property_exists( $this, $field ) ) {
+				return $this->$field;
+			}
 
-		throw new Exception( 'Invalid '. __CLASS__ .' property: ' . $field );
-	}
+			throw new Exception( 'Invalid '. __CLASS__ .' property: ' . $field );
+		}
 
 		/**
 		 * Constructor.
@@ -176,6 +176,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 *
 		 * @since  1.0.0
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return                          The items.
 		 */
 		public function get_items( $request ) {
 
@@ -188,7 +189,6 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Sanitize a value recursively. Works with both arrays and scalar values.
 		 *
 		 * @since  1.0.0
-		 * @author Kellen Mace
 		 * @param  array $value The value to sanitize.
 		 * @return array $value The sanitized value.
 		 */
@@ -209,6 +209,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return $value;
 		}
 
+		/**
+		 * Get trainings data.
+		 *
+		 * @since  1.0.0
+		 * @param  array $args The arguments to use for the query.
+		 * @return array       The trainings data.
+		 */
 		public function get_trainings_data( $args = array() ) {
 
 			// If no args, try to get all trainings data from a transient.
@@ -234,6 +241,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return $trainings_data;
 		}
 
+		/**
+		 * Get Training CPT posts.
+		 *
+		 * @since  1.0.0
+		 * @param  array $args The arguments to use for the query.
+		 * @return array       The training posts.
+		 */
 		private function get_training_posts( $args ) {
 
 			$defaults = array(
@@ -255,6 +269,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return array();
 		}
 
+		/**
+		 * Get a training's data.
+		 *
+		 * @since  1.0.0
+		 * @param  WP_Post $training_post The post.
+		 * @return array                  The training data.
+		 */
 		private function get_training_data( $training_post ) {
 
 			if ( is_scalar( $training_post ) ) {
@@ -293,8 +314,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Permission check for getting items.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return bool                     Whether the user can get items.
 		 */
 		public function get_items_permission_check( $request ) {
 			return current_user_can( 'read' );
@@ -304,8 +325,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Create item.
 		 *
 		 * @since  1.0.0
-		 *
-		 * @param  WP_REST_Request $request Full details about the request.
+		 * @param  WP_REST_Request $request       Full details about the request.
+		 * @return array           $training_data The data for the newly created training.
 		 */
 		public function create_item( $request ) {
 
@@ -334,8 +355,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Permission check for creating item.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return bool                     Whether this user can create trainings.
 		 */
 		public function create_item_permissions_check( $request ) {
 			return current_user_can( 'publish_posts' );
@@ -345,8 +366,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Get item.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return                          The item details.
 		 */
 		public function get_item( $request ) {
 
@@ -359,8 +380,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Permission check for getting item.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return bool                     Whether this user can get training items.
 		 */
 		public function get_item_permissions_check( $request ) {
 			return current_user_can( 'read' );
@@ -372,6 +393,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @since  1.0.0
 		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return string                   Success or failure message.
 		 */
 		public function update_item( $request ) {
 
@@ -402,6 +424,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return new WP_REST_Response( 'Training data was updated successfully.', 200 );
 		}
 
+		/**
+		 * Update a title's training
+		 *
+		 * @since  1.0.0
+		 * @param  int    $training_id The ID of the training.
+		 * @param  string $new_title   The new title.
+		 */
 		private function update_training_title( $training_id, $new_title ) {
 
 			wp_update_post( array(
@@ -410,6 +439,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			) );
 		}
 
+		/**
+		 * Update a training's content.
+		 *
+		 * @since  1.0.0
+		 * @param  int    $training_id The training ID.
+		 * @param  string $new_content The new content.
+		 */
 		private function update_training_content( $training_id, $new_content ) {
 			wp_update_post( array(
 				'ID'           => $training_id,
@@ -417,6 +453,14 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			) );
 		}
 
+		/**
+		 * Update a training's post meta.
+		 *
+		 * @since  1.0.0
+		 * @param  int    $training_id The training ID.
+		 * @param  string $key         The key.
+		 * @param  mixed  $value       The new value.
+		 */
 		private function update_training_post_meta( $training_id, $key, $value ) {
 
 			$key = $this->prefix . $this->convert_camel_case_meta_key_to_snake_case( $key );
@@ -425,6 +469,12 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			$this->update_training_date_modified( $training_id );
 		}
 
+		/**
+		 * Update a training's date modified timestamp.
+		 *
+		 * @since  1.0.0
+		 * @param  int $training_id The training ID.
+		 */
 		private function update_training_date_modified( $training_id ) {
 
 			$time = current_time( 'mysql' );
@@ -436,10 +486,22 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			) );
 		}
 
+		/**
+		 * Delete the transient that stores all training details.
+		 *
+		 * @since  1.0.0
+		 */
 		public function delete_all_trainings_transient() {
 			delete_transient( 'wds_training_all_trainings_data' );
 		}
 
+		/**
+		 * Convert a camel case key to its snake case equivalent.
+		 *
+		 * @since  1.0.0
+		 * @param  string $key The camel case key.
+		 * @return string      The snake case key.
+		 */
 		private function convert_camel_case_meta_key_to_snake_case( $key ) {
 
 			$snake_case_lookup_table = $this->get_snake_case_meta_key_lookup_table();
@@ -447,6 +509,13 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 			return isset( $snake_case_lookup_table[ $key ] ) ? $snake_case_lookup_table[ $key ] : $key;
 		}
 
+		/**
+		 * Get the camel case to snake case lookup table.
+		 *
+		 * @since  NEXT
+		 * @author Kellen Mace
+		 * @return array
+		 */
 		private function get_snake_case_meta_key_lookup_table() {
 			return array(
 				'discussionLead' => 'discussion_lead',
@@ -459,8 +528,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Permission check for updating items.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return bool                     Whether the user can update items.
 		 */
 		public function update_item_permissions_check( $request ) {
 			return current_user_can( 'edit_others_posts' );
@@ -470,8 +539,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Delete item.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return string                   Success or failure message.
 		 */
 		public function delete_item( $request ) {
 
@@ -491,8 +560,8 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * Permission check for deleting items.
 		 *
 		 * @since  1.0.0
-		 *
 		 * @param  WP_REST_Request $request Full details about the request.
+		 * @return bool                     Whether the user can delete items.
 		 */
 		public function delete_item_permissions_check( $request ) {
 			return current_user_can( 'delete_others_posts' );
