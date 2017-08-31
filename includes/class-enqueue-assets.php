@@ -62,9 +62,9 @@ class WDST_Enqueue_Assets {
 			return;
 		}
 
-		wp_enqueue_style( 'wds-training', $this->plugin->url . 'dist/style.min.css', array(), '1.0.0' );
+		wp_enqueue_style( 'wds-training', $this->plugin->url . 'dist/style.css', array(), '1.0.0' );
 
-		wp_enqueue_script( 'wds-training', $this->plugin->url . 'dist/scripts.min.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'wds-training', $this->plugin->url . 'dist/scripts.js', array(), '1.0.0', true );
 
 		wp_localize_script( 'wds-training', 'WDSTTrainingData', $this->get_app_data() );
 	}
