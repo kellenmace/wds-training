@@ -6,8 +6,6 @@ import PastTrainings from './Trainings/PastTrainings';
 import UpcomingTrainings from './Trainings/UpcomingTrainings';
 import SuggestedTrainings from './Trainings/SuggestedTrainings';
 
-// todo: look at .eslintrc and figure out why eslint-plugin-react can't be found.
-
 class App extends React.Component {
 
     constructor() {

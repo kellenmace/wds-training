@@ -25,6 +25,18 @@ class Training extends React.Component {
 		return 'training-form-' + this.props.training.ID;
 	}
 
+	// Get a comma separated alphabetical list of names of people who upvoted this training.
+	getUpvoterNames() {
+		return this.props.training.upvotedBy
+			.map( userID => this.props.users[ userID ] )
+			.sort( (a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1 )
+			.join( ', ' );
+	}
+
+	sortAlphabetically( array ) {
+		return array.sort( (a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1 );
+	}
+
 	// Get the text for the upvote button.
 	getUpvoteButtonText() {
 		return this.hasCurrentUserUpvoted() ? 'Upvoted \u2713' : 'Upvote \u2191';
@@ -100,7 +112,7 @@ class Training extends React.Component {
 			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past">
 				<form id={this.getTrainingFormID()} className="training-form" onSubmit={this.handleSubmit}>
 					<div className="top-bar clearfix">
-						<span className="upvoted-count">
+						<span title={this.getUpvoterNames()} className="upvoted-count">
 							<TransitionGroup component="span" className="upvoted-container">
 								<CSSTransition
 									key={this.props.training.upvotedBy.length}
