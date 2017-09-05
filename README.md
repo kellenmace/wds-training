@@ -51,20 +51,26 @@ This dropdown is used to specify which user on the site suggested this training 
 
 **Done button**
 
-This button is only displayed on newly created trainings. When clicked, it removes the training from pending status and causes it to appear in either the past/suggested/upvoming view based on its date.
+This button is only displayed on newly created trainings. When clicked, it removes the training from its fixed position at the top and displays it in the list along with all the other trainings.
 
 
 Installation
 ------------
 
 1. Clone the repo into the `/plugins/` directory of a local WordPress site and activate the plugin.
-2. Create a new 'Training' page in WordPress and assign the `WDS Training` page template to it.
+2. Create a new page in WordPress and assign the `WDS Training` page template to it.
 3. Visit the training page on the front end.
 
 
 Contributing
 ------------
 
-Run `npm install` followed by `webpack` to run the build scripts. Run `npm start` to run webpack watch and have the build scripts triggered automatically on file save.
+`cd` into this plugin's directory and run `yarn` to install node modules.
+
+Run `yarn dev` for a development build.
+
+Run `yarn watch` to watch files and trigger a development build when any are changed.
+
+Run `yarn prod` for a production build.
 
 Pull requests are welcome.

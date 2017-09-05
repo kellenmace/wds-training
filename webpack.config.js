@@ -8,10 +8,3 @@ module.exports = ( env ) => {
 
 	return mergedConfig;
 };
-
-
-// For reference:
-// https://deliciousbrains.com/develop-wordpress-plugin-webpack-3-react/
-// https://github.com/efuller/wp-starter-plugin/
-// https://github.com/ryelle/Foxhound/blob/master/webpack.config.js
-// https://github.com/efuller/modern-wp-with-react/blob/master/webpack.config.js
