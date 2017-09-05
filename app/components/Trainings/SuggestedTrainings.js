@@ -1,4 +1,5 @@
 import React from 'react';
+import FlipMove from 'react-flip-move';
 import Training from './Training';
 
 class SuggestedTrainings extends React.Component {
@@ -70,18 +71,20 @@ class SuggestedTrainings extends React.Component {
 		return(
 			<div className="trainings suggested">
 				{this.getNewTrainingSection()}
-				{this.getSuggestedTrainings().map(training =>
-					<Training
-						key={training.ID}
-						training={training}
-						users={this.props.users}
-						updateTraining={this.props.updateTraining}
-						updateTrainingUpvotes={this.props.updateTrainingUpvotes}
-						deleteTraining={this.props.deleteTraining}
-						isNewlyCreatedTraining={this.props.isNewlyCreatedTraining}
-						removeNewlyCreatedTrainingProperty={this.props.removeNewlyCreatedTrainingProperty}
-					/>
-				)}
+				<FlipMove duration={600} easing="ease">
+					{this.getSuggestedTrainings().map(training =>
+						<Training
+							key={training.ID}
+							training={training}
+							users={this.props.users}
+							updateTraining={this.props.updateTraining}
+							updateTrainingUpvotes={this.props.updateTrainingUpvotes}
+							deleteTraining={this.props.deleteTraining}
+							isNewlyCreatedTraining={this.props.isNewlyCreatedTraining}
+							removeNewlyCreatedTrainingProperty={this.props.removeNewlyCreatedTrainingProperty}
+						/>
+					)}
+				</FlipMove>
 			</div>
 		)
 	}

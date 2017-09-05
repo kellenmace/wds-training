@@ -25,7 +25,6 @@ class App extends React.Component {
 		this.addNewTraining = this.addNewTraining.bind(this);
 		this.addTrainingToState = this.addTrainingToState.bind(this);
 		this.removeNewlyCreatedTrainingProperty = this.removeNewlyCreatedTrainingProperty.bind(this);
-		this.getView = this.getView.bind(this);
 
         // Initialize the state.
         this.state = {

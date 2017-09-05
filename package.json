@@ -16,6 +16,7 @@
     "react": "^15.5.4",
     "react-datetime": "^2.8.10",
     "react-dom": "^15.5.4",
+    "react-flip-move": "^2.9.15",
     "react-transition-group": "^2.2.0"
   },
   "devDependencies": {
