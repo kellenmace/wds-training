@@ -351,56 +351,42 @@ class App extends React.Component {
 		return training.hasOwnProperty( 'isNewlyCreatedTraining' ) && true === training.isNewlyCreatedTraining;
 	}
 
-	// Get the current view.
-	getView() {
-
-		if ( 'false' === WDSTTrainingData.isUserLoggedIn ) {
-			return <LoginMessage />
-		}
+	// Get the current view component.
+	getViewComponent() {
 
 		if ( 'pastTrainings' === this.state.currentView ) {
-			return <PastTrainings
-				trainings={this.state.trainings}
-				users={this.state.users}
-				updateTraining={this.updateTraining}
-				updateTrainingUpvotes={this.updateTrainingUpvotes}
-				deleteTraining={this.deleteTraining}
-				isNewlyCreatedTraining={this.isNewlyCreatedTraining}
-				removeNewlyCreatedTrainingProperty={this.removeNewlyCreatedTrainingProperty}
-			/>;
+			return PastTrainings;
 		}
 
 		if ( 'upcomingTrainings' === this.state.currentView ) {
-			return <UpcomingTrainings
-				trainings={this.state.trainings}
-				users={this.state.users}
-				updateTraining={this.updateTraining}
-				updateTrainingUpvotes={this.updateTrainingUpvotes}
-				deleteTraining={this.deleteTraining}
-				isNewlyCreatedTraining={this.isNewlyCreatedTraining}
-				removeNewlyCreatedTrainingProperty={this.removeNewlyCreatedTrainingProperty}
-			/>;
+			return UpcomingTrainings;
 		}
 
-		// Show the suggested trainings view by default.
-		return <SuggestedTrainings
-			trainings={this.state.trainings}
-			users={this.state.users}
-			updateTraining={this.updateTraining}
-			updateTrainingUpvotes={this.updateTrainingUpvotes}
-			deleteTraining={this.deleteTraining}
-			addNewTraining={this.addNewTraining}
-			isNewlyCreatedTraining={this.isNewlyCreatedTraining}
-			removeNewlyCreatedTrainingProperty={this.removeNewlyCreatedTrainingProperty}
-		/>;
+		// Show the suggested trainings view component by default.
+		return SuggestedTrainings;
 	}
 
 	render() {
 
+		if ( ! WDSTTrainingData.isUserLoggedIn ) {
+			return <LoginMessage />
+		}
+
+		const ViewComponent = this.getViewComponent();
+
 		return(
 			<div className="wds-training-container">
 				<Nav currentView={this.state.currentView} updateCurrentView={this.updateCurrentView} />
-				{this.getView()}
+				<ViewComponent
+					trainings={this.state.trainings}
+					users={this.state.users}
+					updateTraining={this.updateTraining}
+					updateTrainingUpvotes={this.updateTrainingUpvotes}
+					deleteTraining={this.deleteTraining}
+					addNewTraining={this.addNewTraining}
+					isNewlyCreatedTraining={this.isNewlyCreatedTraining}
+					removeNewlyCreatedTrainingProperty={this.removeNewlyCreatedTrainingProperty}
+				/>
 			</div>
 		)
 	}

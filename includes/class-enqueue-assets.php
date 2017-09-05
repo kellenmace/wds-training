@@ -87,7 +87,7 @@ class WDST_Enqueue_Assets {
 	public function get_app_data() {
 		return array(
 			'RESTBaseURL'    => esc_url_raw( $this->plugin->rest_api_endpoints->rest_base_url ),
-			'isUserLoggedIn' => is_user_logged_in() ? 'true' : 'false',
+			'isUserLoggedIn' => is_user_logged_in(),
 			'currentUserID'  => get_current_user_id(),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'loginURL'       => wp_login_url( get_permalink() ),
