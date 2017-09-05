@@ -12,18 +12,18 @@ class App extends React.Component {
         super();
 
         // Allows you to use "this" in methods to refer to the App component.
-		this.updateCurrentView = this.updateCurrentView.bind(this);
-		this.updateTraining = this.updateTraining.bind(this);
-		this.updateTrainingUpvotes = this.updateTrainingUpvotes.bind(this);
-		this.addPendingSyncItem = this.addPendingSyncItem.bind(this);
-		this.deletePendingSyncItem = this.deletePendingSyncItem.bind(this);
-		this.deleteTraining = this.deleteTraining.bind(this);
+		this.updateCurrentView                  = this.updateCurrentView.bind(this);
+		this.updateTraining                     = this.updateTraining.bind(this);
+		this.updateTrainingUpvotes              = this.updateTrainingUpvotes.bind(this);
+		this.addPendingSyncItem                 = this.addPendingSyncItem.bind(this);
+		this.deletePendingSyncItem              = this.deletePendingSyncItem.bind(this);
+		this.deleteTraining                     = this.deleteTraining.bind(this);
 		this.removeTrainingsFromPendingDeletion = this.removeTrainingsFromPendingDeletion.bind(this);
-		this.removeTrainingFromPendingDeletion = this.removeTrainingFromPendingDeletion.bind(this);
-		this.deleteTrainingFromState = this.deleteTrainingFromState.bind(this);
-		this.isTrainingInState = this.isTrainingInState.bind(this);
-		this.addNewTraining = this.addNewTraining.bind(this);
-		this.addTrainingToState = this.addTrainingToState.bind(this);
+		this.removeTrainingFromPendingDeletion  = this.removeTrainingFromPendingDeletion.bind(this);
+		this.deleteTrainingFromState            = this.deleteTrainingFromState.bind(this);
+		this.isTrainingInState                  = this.isTrainingInState.bind(this);
+		this.addNewTraining                     = this.addNewTraining.bind(this);
+		this.addTrainingToState                 = this.addTrainingToState.bind(this);
 		this.removeNewlyCreatedTrainingProperty = this.removeNewlyCreatedTrainingProperty.bind(this);
 
         // Initialize the state.
@@ -262,6 +262,7 @@ class App extends React.Component {
 		return training.hasOwnProperty( 'pendingDeletion' ) && true === training.pendingDeletion;
 	}
 
+	// Delete a training from state.
 	deleteTrainingFromState( trainingID ) {
 		const oldTrainings = this.state.trainings;
 		const trainings = oldTrainings.filter(training => trainingID != training.ID);
@@ -280,7 +281,7 @@ class App extends React.Component {
 	// Create a new training on the server, then add it to the front end app.
 	addNewTraining() {
 
-		// todo: show a spinner on the Add New button.
+		// todo: show a spinner on the Add New button. http://tawian.io/text-spinners/
 
 		this.createTrainingOnServer().then(response => {
 				const training = response.data;

@@ -10,7 +10,7 @@ class Training extends React.Component {
 		this.updateTimestamp = this.updateTimestamp.bind(this);
 	}
 
-	// Event handler for Training form submission
+	// Event handler for training form submission
 	handleSubmit( event ) {
 		event.preventDefault();
 	}
@@ -46,7 +46,7 @@ class Training extends React.Component {
 	// Display the sync status.
 	displaySyncStatus() {
 		if ( this.props.training.hasOwnProperty( 'recentlySynced' ) && true === this.props.training.recentlySynced ) {
-			return '\u2713 Synced';
+			return '\u2713 Saved';
 		}
 
 		return '';
@@ -78,7 +78,7 @@ class Training extends React.Component {
 	}
 
 	// Update a training's timestamp.
-	updateTimestamp(momentObject) {
+	updateTimestamp( momentObject ) {
 
 		// We have to build an object that mimics an event object, since react-datetime
 		// doesn't provide the actual select onChange event. More info here:
@@ -86,7 +86,7 @@ class Training extends React.Component {
 		const event = {
 			target: {
 				name: 'timestamp',
-				value: this.getTimestampFromMomentObject(momentObject),
+				value: this.getTimestampFromMomentObject( momentObject ),
 				closest: () => {
 					return { id: this.getTrainingFormID() };
 				}
@@ -97,7 +97,7 @@ class Training extends React.Component {
 	}
 
 	// Get a timestamp from a Moment object, or empty string if none.
-	getTimestampFromMomentObject(momentObject) {
+	getTimestampFromMomentObject( momentObject ) {
 		return momentObject ? momentObject.unix() : '';
 	}
 

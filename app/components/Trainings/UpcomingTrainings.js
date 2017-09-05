@@ -15,7 +15,7 @@ class UpcomingTrainings extends React.Component {
 
 	// Is this training in the future?
 	isUpcomingTraining( training ) {
-		const currentTimestamp = Math.floor(Date.now() / 1000);
+		const currentTimestamp = Math.floor( Date.now() / 1000 );
 		return training.timestamp >= currentTimestamp;
 	}
 

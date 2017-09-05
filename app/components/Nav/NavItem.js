@@ -11,7 +11,7 @@ class NavItem extends React.Component {
 		this.handleNavItemClick = this.handleNavItemClick.bind(this);
 	}
 
-	// Give the nav item a class of 'nav-item', and 'active' only if it is active.
+	// Get classes for this menu item. Apply an 'active' class only if it is the currently active view.
 	getClasses( view ) {
 		return this.isActiveView( view ) ? 'nav-item active' : 'nav-item';
 	}

@@ -6,8 +6,8 @@ class SuggestedTrainings extends React.Component {
 	constructor() {
 		super();
 
-		this.getNewTrainingSection = this.getNewTrainingSection.bind(this);
-		this.getSuggestedTrainings = this.getSuggestedTrainings.bind(this);
+		this.getNewTrainingSection    = this.getNewTrainingSection.bind(this);
+		this.getSuggestedTrainings    = this.getSuggestedTrainings.bind(this);
 		this.getNewlyCreatedTrainings = this.getNewlyCreatedTrainings.bind(this);
 	}
 
@@ -20,7 +20,7 @@ class SuggestedTrainings extends React.Component {
 	getSuggestedTrainings() {
 		let suggestedTrainings = this.props.trainings.filter( training => { return this.doesTrainingLackTimestamp( training ) && ! this.props.isNewlyCreatedTraining( training ) } );
 
-		return suggestedTrainings.sort(this.compareTrainingsUpvotes);
+		return suggestedTrainings.sort( this.compareTrainingsUpvotes );
 	}
 
 	// Return true if training1 has less upvotes or false if training2 does or they're equal.
