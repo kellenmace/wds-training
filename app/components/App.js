@@ -34,6 +34,9 @@ class App extends React.Component {
 			users: WDSTTrainingData.users,
 			pendingSync: []
 		}
+
+		// Initialize recently synced property to false for all trainings.
+		this.state.trainings.map( training => training.recentlySynced = false );
     }
 
 	// Update the current view.
@@ -57,15 +60,22 @@ class App extends React.Component {
 		const timeoutID = setTimeout( () => {
 			this.updateTrainingPost( trainingID, key, value );
 			this.deletePendingSyncItem( trainingID, key );
+			this.displayTrainingAsRecentlySynced( trainingID );
 		}, 1000 );
 
 		// Add item to the list of items pending sync.
 		this.addPendingSyncItem( timeoutID, trainingID, key, value );
 	}
 
+	// Mark a training as recently synced, then remove that label shortly thereafter.
+	displayTrainingAsRecentlySynced( trainingID ) {
+		this.updateTrainingState( trainingID, 'recentlySynced', true );
+		setTimeout( () => this.updateTrainingState( trainingID, 'recentlySynced', false ), 1500);
+	}
+
 	// Clear old sync timeouts, remove duplicates from the list of items pending sync, then add a new one.
 	addPendingSyncItem( timeoutID, trainingID, key, value ) {
-		const oldPendingSync = this.state.pendingSync.slice();
+		const oldPendingSync  = [...this.state.pendingSync];
 		const pendingSyncItem = oldPendingSync.filter( oldPendingSyncItem => trainingID == oldPendingSyncItem.trainingID && key == oldPendingSyncItem.key );
 
 		// If there is a pending sync for this training and key, clear its timeout.
@@ -85,10 +95,10 @@ class App extends React.Component {
 
 	// Clear the timeout for an item that is pending sync, then remove it from the pending sync list.
 	deletePendingSyncItem( trainingID, key ) {
-		const oldPendingSync = this.state.pendingSync.slice();
+		const oldPendingSync  = [...this.state.pendingSync];
 		const pendingSyncItem = oldPendingSync.filter( oldPendingSyncItem => trainingID == oldPendingSyncItem.trainingID && key == oldPendingSyncItem.key );
 
-		if ( pendingSyncItem.length <= 0 ) {
+		if ( ! pendingSyncItem.length ) {
 			return;
 		}
 

@@ -33,10 +33,6 @@ class Training extends React.Component {
 			.join( ', ' );
 	}
 
-	sortAlphabetically( array ) {
-		return array.sort( (a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1 );
-	}
-
 	// Get the text for the upvote button.
 	getUpvoteButtonText() {
 		return this.hasCurrentUserUpvoted() ? 'Upvoted \u2713' : 'Upvote \u2191';
@@ -45,6 +41,15 @@ class Training extends React.Component {
 	// Has the current user upvoted this training?
 	hasCurrentUserUpvoted() {
 		return -1 !== this.props.training.upvotedBy.indexOf( WDSTTrainingData.currentUserID );
+	}
+
+	// Display the sync status.
+	displaySyncStatus() {
+		if ( this.props.training.hasOwnProperty( 'recentlySynced' ) && true === this.props.training.recentlySynced ) {
+			return '\u2713 Synced';
+		}
+
+		return '';
 	}
 
 	// Get the text for the delete button.
@@ -125,6 +130,7 @@ class Training extends React.Component {
 								Upvotes
 						</span>
 						<button name="upvotedBy" className="upvoted-by" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
+						<span>{this.displaySyncStatus()}</span>
 						<button type="button" name="delete" ref="button" className="button--delete" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
 					</div>
 
