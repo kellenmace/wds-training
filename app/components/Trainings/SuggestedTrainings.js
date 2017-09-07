@@ -6,6 +6,7 @@ class SuggestedTrainings extends React.Component {
 	constructor() {
 		super();
 
+		// Allows you to use "this" in methods to refer to the SuggestedTrainings component.
 		this.getNewTrainingSection    = this.getNewTrainingSection.bind(this);
 		this.getSuggestedTrainings    = this.getSuggestedTrainings.bind(this);
 		this.getNewlyCreatedTrainings = this.getNewlyCreatedTrainings.bind(this);

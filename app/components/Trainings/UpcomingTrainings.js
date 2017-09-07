@@ -5,6 +5,7 @@ class UpcomingTrainings extends React.Component {
 	constructor() {
 		super();
 
+		// Allows you to use "this" in methods to refer to the UpcomingTrainings component.
 		this.getUpcomingTrainings = this.getUpcomingTrainings.bind(this);
 	}
 

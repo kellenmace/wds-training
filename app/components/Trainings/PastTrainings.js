@@ -5,6 +5,7 @@ class PastTrainings extends React.Component {
 	constructor() {
 		super();
 
+		// Allows you to use "this" in methods to refer to the PastTrainings component.
 		this.getPastTrainings = this.getPastTrainings.bind(this);
 	}
 

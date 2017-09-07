@@ -180,7 +180,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 */
 		public function get_items( $request ) {
 
-			$args = $this->sanitize_recursively( $request->get_param( 'args' ) );
+			$args = (array) $this->sanitize_recursively( $request->get_param( 'args' ) );
 
 			return new WP_REST_Response( $this->get_trainings_data( $args ), 200 );
 		}

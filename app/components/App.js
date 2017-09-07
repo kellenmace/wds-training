@@ -45,7 +45,6 @@ class App extends React.Component {
 
 	// Event handler for updating a training.
 	updateTraining( event ) {
-		// todo: consider changing this to a ref instead of accessing the DOM directly.
 		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const key = event.target.name;
 		const value = event.target.value;
@@ -112,7 +111,6 @@ class App extends React.Component {
 
 	// Event handler for updating a training's upvotes.
 	updateTrainingUpvotes( event ) {
-		// todo: consider changing this to a ref instead of accessing the DOM directly.
 		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const key = event.target.name;
 		const value = this.getNewUpvotesValue( trainingID, key );
@@ -166,9 +164,7 @@ class App extends React.Component {
 		axios.post(WDSTTrainingData.RESTBaseURL + trainingID,
 			{ key, value },
 			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
-			.catch(function (error) {
-				console.log(error);
-			});
+			.catch( error => console.log( error ) );
 	}
 
 	// Get the new array of upvotes after adding/removing the current user's ID.
@@ -207,7 +203,6 @@ class App extends React.Component {
 
 	// Event handler for deleting a training.
 	deleteTraining( event ) {
-		// todo: consider changing this to a ref instead of accessing the DOM directly.
 		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const training = this.getTrainingFromState( trainingID );
 
@@ -273,9 +268,7 @@ class App extends React.Component {
 	deleteTrainingOnServer( trainingID ) {
 		axios.delete(WDSTTrainingData.RESTBaseURL + trainingID,
 			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
-			.catch(function (error) {
-				console.log(error);
-			});
+			.catch( error => console.log( error ) );
 	}
 
 	// Create a new training on the server, then add it to the front end app.
@@ -290,7 +283,7 @@ class App extends React.Component {
 
 				// todo: remove spinner on the Add New button.
 			})
-			.catch(function (error) {
+			.catch( error => {
 				console.log(error);
 				// todo: remove spinner on the Add New button.
 			});
@@ -301,9 +294,7 @@ class App extends React.Component {
 		return axios.post(WDSTTrainingData.RESTBaseURL,
 			{ postTitle: '', postContent: '' },
 			{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
-			.catch(function (error) {
-				console.log(error);
-			});
+			.catch( error => console.log( error ) );
 	}
 
 	// Add a new training to the state.
@@ -323,7 +314,6 @@ class App extends React.Component {
 
 	// Remove 'isNewlyCreatedTraining' property from a training.
 	removeNewlyCreatedTrainingProperty( event ) {
-		// todo: consider changing this to a ref instead of accessing the DOM directly.
 		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
 		const training = this.getTrainingFromState( trainingID );
 
@@ -393,33 +383,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-
-
-
-// todo: consider refreshing app training data periodically using code similar to the below.
-
-// updateStateWithRecentlyUpdatedTrainings() {
-// 	return this.fetchRecentlyUpdatedTrainings().then(response => {
-// 			const updatedTrainings = response.data;
-// 			const updatedTrainingIDs = updatedTrainings.map(updatedTraining => updatedTraining.ID);
-// 			const oldTrainings = this.state.trainings;
-// 			const trainings = oldTrainings.filter(oldTraining => -1 === updatedTrainingIDs.indexOf( oldTraining.ID ));
-// 			trainings.push(...updatedTrainings);
-// 			this.setState({ trainings });
-// 		})
-// 		.catch(function (error) {
-// 			console.log(error);
-// 		});
-// }
-//
-// fetchRecentlyUpdatedTrainings() {
-// 	// remove this delete and replace with a .then() callback.
-// 	return axios.get(WDSTTrainingData.RESTBaseURL,
-// 		{ orderby: 'modified', posts_per_page: '20' },
-// 		{ headers: { 'X-WP-Nonce': WDSTTrainingData.nonce } })
-// 		.catch(function (error) {
-// 			console.log(error);
-// 		});
-// }

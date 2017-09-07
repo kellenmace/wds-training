@@ -6,8 +6,8 @@ class NavItem extends React.Component {
 		super();
 
 		// Allows you to use "this" in methods to refer to the Nav component.
-		this.getClasses = this.getClasses.bind(this);
-		this.isActiveView = this.isActiveView.bind(this);
+		this.getClasses         = this.getClasses.bind(this);
+		this.isActiveView       = this.isActiveView.bind(this);
 		this.handleNavItemClick = this.handleNavItemClick.bind(this);
 	}
 
