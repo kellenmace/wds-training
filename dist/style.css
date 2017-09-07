@@ -628,6 +628,7 @@ td.rdtYear:hover {
   margin-bottom: 15px; }
 
 .training {
+  background: #fff;
   border: 1px solid #f0f0f0;
   border-radius: 4px;
   margin-bottom: 25px;
@@ -708,24 +709,14 @@ td.rdtYear:hover {
 
 .upvotes-enter {
   position: absolute;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
-  transition: -webkit-transform 2.5s;
-  transition: transform 2.5s;
-  transition: transform 2.5s, -webkit-transform 2.5s; }
+  transform: translateY(100%);
+  transition: transform 2.5s; }
   .upvotes-enter.upvotes-enter-active {
-    -webkit-transform: translateY(0);
-            transform: translateY(0); }
+    transform: translateY(0); }
 
 .upvotes-exit {
   position: absolute;
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
-  transition: -webkit-transform 2.5s;
-  transition: transform 2.5s;
-  transition: transform 2.5s, -webkit-transform 2.5s; }
+  transform: translateY(0);
+  transition: transform 2.5s; }
   .upvotes-exit.upvotes-exit-active {
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%); }
-
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZS5taW4uY3NzIiwic291cmNlUm9vdCI6IiJ9*/
+    transform: translateY(-100%); }

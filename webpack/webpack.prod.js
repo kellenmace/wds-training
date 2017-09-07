@@ -21,6 +21,7 @@ const config = {
 			},
 			"sourceMap": false
 		} ),
+
 		// Extract the CSS file.
 		new ExtractTextPlugin( 'style.css' ),
 
