@@ -28,10 +28,14 @@ class Training extends React.Component {
 
 	// Get a comma separated alphabetical list of names of people who upvoted this training.
 	getUpvoterNames() {
-		return this.props.training.upvotedBy
-			.map( userID => this.props.users[ userID ] )
-			.sort( (a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1 )
-			.join( ', ' );
+		if ( this.props.training.upvotedBy.length ) {
+			return this.props.training.upvotedBy
+				.map(userID => this.props.users[userID])
+				.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+				.join(', ');
+		}
+
+		return 'No upvotes';
 	}
 
 	// Get the text for the upvote button.
@@ -47,7 +51,7 @@ class Training extends React.Component {
 	// Display the sync status.
 	displaySyncStatus() {
 		if ( this.props.training.hasOwnProperty( 'recentlySynced' ) && true === this.props.training.recentlySynced ) {
-			return '\u2713 Saved';
+			return <span className="sync-status">&#10003; Saved</span>;
 		}
 
 		return '';
@@ -131,8 +135,10 @@ class Training extends React.Component {
 								Upvotes
 						</span>
 						<button name="upvotedBy" className="upvoted-by" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
-						<span>{this.displaySyncStatus()}</span>
-						<button type="button" name="delete" ref="button" className="button--delete" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
+						<div className="right-section">
+							{this.displaySyncStatus()}
+							<button type="button" name="delete" ref="button" className="button--delete" onClick={this.props.deleteTraining}>{this.getDeleteButtonText()}</button>
+						</div>
 					</div>
 
 					<div className="middle-bar">

@@ -38,18 +38,20 @@ class SuggestedTrainings extends React.Component {
 	getNewTrainingSection() {
 		// If a newly created training exists, show that.
 		if ( this.doAnyNewlyCreatedTrainingsExist() ) {
-			return this.getNewlyCreatedTrainings().map(training =>
-				<Training
-					key={training.ID}
-					training={training}
-					users={this.props.users}
-					updateTraining={this.props.updateTraining}
-					updateTrainingUpvotes={this.props.updateTrainingUpvotes}
-					deleteTraining={this.props.deleteTraining}
-					isNewlyCreatedTraining={this.props.isNewlyCreatedTraining}
-					removeNewlyCreatedTrainingProperty={this.props.removeNewlyCreatedTrainingProperty}
-				/>
-			);
+			return <div className="new-training">
+				{this.getNewlyCreatedTrainings().map(training =>
+					<Training
+						key={training.ID}
+						training={training}
+						users={this.props.users}
+						updateTraining={this.props.updateTraining}
+						updateTrainingUpvotes={this.props.updateTrainingUpvotes}
+						deleteTraining={this.props.deleteTraining}
+						isNewlyCreatedTraining={this.props.isNewlyCreatedTraining}
+						removeNewlyCreatedTrainingProperty={this.props.removeNewlyCreatedTrainingProperty}
+					/>
+				)}
+			</div>
 		}
 
 		// Else, show the Add New Training button.

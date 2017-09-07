@@ -36,7 +36,7 @@ body {
 			background-color: $color-alabaster;
 			border: 1px solid $color-white-smoke;
 			border-radius: 4px;
-			cursor: default;
+			cursor: pointer;
 			display: inline-block;
 			font-size: 12px;
 			margin-right: 5px;
@@ -76,10 +76,11 @@ body {
 //-----------------------------------------
 // Buttons
 //-----------------------------------------
-.button {
+.wds-training-container button {
+	cursor: pointer;
 
-	&--delete,
-	&--done {
+	&.button--delete,
+	&.button--done {
 		float: right;
 	} // &--delete, &--done
 } // .button
@@ -166,6 +167,12 @@ body {
 	} // .bottom-bar
 } // .training
 
+.new-training {
+	.training {
+		box-shadow: 0 0 10px 1px $color-light-gray;
+		margin-bottom: 25px;
+	}
+}
 
 //-----------------------------------------
 // Top Bar
@@ -182,6 +189,7 @@ body {
 	line-height: 28px;
 	margin-right: 10px;
 	text-align: right;
+	cursor: context-menu;
 
 	.upvoted-container {
 		margin-right: 5px;
@@ -218,6 +226,18 @@ body {
 	} // .upvoted-container
 } // .upvoted-count
 
+.right-section {
+	float: right;
+
+	.sync-status {
+		display: block;
+		float: left;
+		font-size: 12px;
+		height: 28px;
+		line-height: 28px;
+		margin-right: 10px;
+	}
+}
 
 //-----------------------------------------
 // Upvotes
