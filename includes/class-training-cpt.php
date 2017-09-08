@@ -50,12 +50,13 @@ class WDST_Training_CPT extends CPT_Core {
 				'training',
 			),
 			array(
-				'supports'     => array(
+				'supports'  => array(
 					'title',
 					'editor',
 				),
-				'menu_icon'    => 'dashicons-clipboard',
-				'public'       => false,
+				'menu_icon' => 'dashicons-clipboard',
+				'public'    => false,
+				'show_ui'   => false,
 			)
 		);
 	}
