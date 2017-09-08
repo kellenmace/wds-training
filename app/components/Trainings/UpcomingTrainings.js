@@ -9,15 +9,28 @@ class UpcomingTrainings extends React.Component {
 		this.getUpcomingTrainings = this.getUpcomingTrainings.bind(this);
 	}
 
-	// Get just the trainings in the future.
+	// Get just the trainings in the future, sorted by timestamp.
 	getUpcomingTrainings() {
-		return this.props.trainings.filter( this.isUpcomingTraining );
+		return this.props.trainings
+			.filter( this.hasTimestamp )
+			.filter( this.isUpcomingTraining )
+			.sort( this.sortTimestampsAscending );
+	}
+
+	// Does this training have a timestamp?
+	hasTimestamp( training ) {
+		return Boolean( training.timestamp );
 	}
 
 	// Is this training in the future?
 	isUpcomingTraining( training ) {
 		const currentTimestamp = Math.floor( Date.now() / 1000 );
 		return training.timestamp >= currentTimestamp;
+	}
+
+	// Sort two trainings by their timestamps in ascending order.
+	sortTimestampsAscending( training1, training2 ) {
+		return parseInt( training1.timestamp ) < parseInt( training2.timestamp ) ? -1 : 1;
 	}
 
 	render() {

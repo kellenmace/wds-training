@@ -9,9 +9,12 @@ class PastTrainings extends React.Component {
 		this.getPastTrainings = this.getPastTrainings.bind(this);
 	}
 
-	// Get just the trainings in the past.
+	// Get just the trainings in the past, sorted by timestamp.
 	getPastTrainings() {
-		return this.props.trainings.filter( this.hasTimestamp ).filter( this.isPastTraining );
+		return this.props.trainings
+			.filter( this.hasTimestamp )
+			.filter( this.isPastTraining )
+			.sort( this.sortTimestampsDescending );
 	}
 
 	// Does this training have a timestamp?
@@ -23,6 +26,11 @@ class PastTrainings extends React.Component {
 	isPastTraining( training ) {
 		const currentTimestamp = Math.floor(Date.now() / 1000);
 		return training.timestamp < currentTimestamp;
+	}
+
+	// Sort two trainings by their timestamps in descending order.
+	sortTimestampsDescending( training1, training2 ) {
+		return parseInt( training1.timestamp ) > parseInt( training2.timestamp ) ? -1 : 1;
 	}
 
 	render() {

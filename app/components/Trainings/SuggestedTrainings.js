@@ -17,15 +17,16 @@ class SuggestedTrainings extends React.Component {
 		event.preventDefault();
 	}
 
-	// Get just the trainings without a timestamp.
+	// Get just the trainings without a timestamp, sorted by upvotes.
 	getSuggestedTrainings() {
-		let suggestedTrainings = this.props.trainings.filter( training => { return this.doesTrainingLackTimestamp( training ) && ! this.props.isNewlyCreatedTraining( training ) } );
-
-		return suggestedTrainings.sort( this.compareTrainingsUpvotes );
+		return this.props.trainings
+			.filter( this.doesTrainingLackTimestamp )
+			.filter( training => ! this.props.isNewlyCreatedTraining( training ) )
+			.sort( this.sortByUpvotesDescending );
 	}
 
-	// Return true if training1 has less upvotes or false if training2 does or they're equal.
-	compareTrainingsUpvotes(training1, training2) {
+	// Return -1 if training1 has more upvotes or 1 if training2 does or they're equal.
+	sortByUpvotesDescending(training1, training2) {
 		return training1.upvotedBy.length > training2.upvotedBy.length ? -1 : 1;
 	}
 
