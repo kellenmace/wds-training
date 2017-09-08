@@ -1,7 +1,6 @@
 import React from 'react';
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { TransitionGroup, CSSTransition, Transition } from 'react-transition-group';
 
 class Training extends React.Component {
 	constructor() {
@@ -122,18 +121,7 @@ class Training extends React.Component {
 			<div key={this.props.training.ID} id={this.getTrainingDivID()} className="training past">
 				<form id={this.getTrainingFormID()} className="training-form" onSubmit={this.handleSubmit}>
 					<div className="top-bar clearfix">
-						<span title={this.getUpvoterNames()} className="upvoted-count">
-							<TransitionGroup component="span" className="upvoted-container">
-								<CSSTransition
-									key={this.props.training.upvotedBy.length}
-									classNames="upvotes"
-									timeout={{ enter: 250, exit: 250 }}
-								>
-									<span key={this.props.training.upvotedBy.length}>{this.props.training.upvotedBy.length}</span>
-								</CSSTransition>
-							</TransitionGroup>
-								Upvotes
-						</span>
+						<span title={this.getUpvoterNames()} className="upvoted-count">{this.props.training.upvotedBy.length} Upvotes</span>
 						<button name="upvotedBy" className="upvoted-by" onClick={this.props.updateTrainingUpvotes}>{this.getUpvoteButtonText()}</button>
 						<div className="right-section">
 							{this.displaySyncStatus()}

@@ -200,40 +200,6 @@ body {
 	margin-right: 10px;
 	text-align: right;
 	cursor: context-menu;
-
-	.upvoted-container {
-		margin-right: 5px;
-		position: relative;
-
-		.upvotes-enter {
-			bottom: auto;
-			left: auto;
-			opacity: 1;
-			right: auto;
-			top: 0;
-
-			&.upvotes-enter-active {
-				opacity: 0;
-				top: -50px;
-				transition: top 0.4s, opacity 0.2s ease-in-out;
-			} // &.upvotes-enter-active
-		} // .upvotes-enter
-
-		.upvotes-exit {
-			bottom: auto;
-			left: auto;
-			opacity: 1;
-			position: relative;
-			right: auto;
-			top: 0;
-
-			&.upvotes-leave-active {
-				opacity: 0;
-				top: -50px;
-				transition: top 0.4s, opacity 0.2s ease-in-out;
-			} // &.upvotes-leave-active
-		} // .upvotes-leave
-	} // .upvoted-container
 } // .upvoted-count
 
 .right-section {
@@ -247,7 +213,7 @@ body {
 		line-height: 28px;
 		margin-right: 10px;
 	}
-}
+} // .right-section
 
 //-----------------------------------------
 // Upvotes

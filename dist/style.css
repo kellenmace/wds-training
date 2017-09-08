@@ -696,30 +696,6 @@ td.rdtYear:hover {
   margin-right: 10px;
   text-align: right;
   cursor: context-menu; }
-  .upvoted-count .upvoted-container {
-    margin-right: 5px;
-    position: relative; }
-    .upvoted-count .upvoted-container .upvotes-enter {
-      bottom: auto;
-      left: auto;
-      opacity: 1;
-      right: auto;
-      top: 0; }
-      .upvoted-count .upvoted-container .upvotes-enter.upvotes-enter-active {
-        opacity: 0;
-        top: -50px;
-        transition: top 0.4s, opacity 0.2s ease-in-out; }
-    .upvoted-count .upvoted-container .upvotes-exit {
-      bottom: auto;
-      left: auto;
-      opacity: 1;
-      position: relative;
-      right: auto;
-      top: 0; }
-      .upvoted-count .upvoted-container .upvotes-exit.upvotes-leave-active {
-        opacity: 0;
-        top: -50px;
-        transition: top 0.4s, opacity 0.2s ease-in-out; }
 
 .right-section {
   float: right; }
