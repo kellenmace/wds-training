@@ -26,7 +26,7 @@ class SuggestedTrainings extends React.Component {
 
 	// Return true if training1 has less upvotes or false if training2 does or they're equal.
 	compareTrainingsUpvotes(training1, training2) {
-		return training1.upvotedBy.length < training2.upvotedBy.length;
+		return training1.upvotedBy.length > training2.upvotedBy.length ? -1 : 1;
 	}
 
 	// Does this training lack a timestamp?
