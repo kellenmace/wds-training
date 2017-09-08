@@ -19,6 +19,12 @@ body {
 	width: calc(100% - 242px); // for make theme only.
 } // #app
 
+#app h1 {
+	text-align: center;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
 
 //-----------------------------------------
 // Nav Container
@@ -38,10 +44,14 @@ body {
 			border-radius: 4px;
 			cursor: pointer;
 			display: inline-block;
-			font-size: 12px;
+			font-size: 15px;
 			margin-right: 5px;
 			padding: 4px 6px;
 			transition: background-color 0.3s ease-in-out;
+
+			.icon {
+				margin-right: 5px;
+			}
 
 			a {
 				color: $color-black;

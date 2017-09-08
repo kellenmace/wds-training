@@ -315,13 +315,13 @@ class App extends React.Component {
 	// Remove 'isNewlyCreatedTraining' property from a training.
 	removeNewlyCreatedTrainingProperty( event ) {
 		const trainingID = this.getTrainingIDFromFormID( event.target.closest('.training-form').id );
-		const training = this.getTrainingFromState( trainingID );
+		const training   = this.getTrainingFromState( trainingID );
 
 		if ( ! this.isNewlyCreatedTraining( training ) ) {
 			return;
 		}
 
-		const trainings = this.state.trainings;
+		const trainings     = this.state.trainings;
 		const trainingIndex = trainings.indexOf( training );
 
 		if ( trainingIndex.length < 0 ) {
@@ -366,6 +366,7 @@ class App extends React.Component {
 
 		return(
 			<div className="wds-training-container">
+				<h1>Trainings</h1>
 				<Nav currentView={this.state.currentView} updateCurrentView={this.updateCurrentView} />
 				<ViewComponent
 					trainings={this.state.trainings}

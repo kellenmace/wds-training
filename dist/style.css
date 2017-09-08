@@ -594,6 +594,11 @@ td.rdtYear:hover {
   padding: 16px 15px 16px 14px;
   width: calc(100% - 242px); }
 
+#app h1 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px; }
+
 .nav-container .nav {
   list-style: none;
   margin: 0 0 15px;
@@ -604,10 +609,12 @@ td.rdtYear:hover {
     border-radius: 4px;
     cursor: pointer;
     display: inline-block;
-    font-size: 12px;
+    font-size: 15px;
     margin-right: 5px;
     padding: 4px 6px;
     transition: background-color 0.3s ease-in-out; }
+    .nav-container .nav .nav-item .icon {
+      margin-right: 5px; }
     .nav-container .nav .nav-item a {
       color: #000;
       text-decoration: none; }
