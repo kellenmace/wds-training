@@ -34,9 +34,18 @@ class UpcomingTrainings extends React.Component {
 	}
 
 	render() {
+
+		const upcomingTrainings = this.getUpcomingTrainings();
+
+		// If no upcoming trainings exist.
+		if ( ! upcomingTrainings.length ) {
+			return <span>No upcoming trainings.</span>
+		}
+
+		// If upcoming trainings do exist.
 		return(
 			<div className="trainings upcoming">
-				{this.getUpcomingTrainings().map(training =>
+				{upcomingTrainings.map(training =>
 					<Training
 						key={training.ID}
 						training={training}

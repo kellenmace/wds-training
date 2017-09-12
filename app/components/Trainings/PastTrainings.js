@@ -34,9 +34,18 @@ class PastTrainings extends React.Component {
 	}
 
 	render() {
+
+		const pastTrainings = this.getPastTrainings();
+
+		// If no past trainings exist.
+		if ( ! pastTrainings.length ) {
+			return <span>No past trainings.</span>
+		}
+
+		// If past trainings do exist.
 		return(
 			<div className="trainings past">
-				{this.getPastTrainings().map(training =>
+				{pastTrainings.map(training =>
 					<Training
 						key={training.ID}
 						training={training}

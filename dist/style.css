@@ -592,12 +592,14 @@ td.rdtYear:hover {
 #app {
   background-color: #fff;
   padding: 16px 15px 16px 14px;
-  width: calc(100% - 242px); }
+  width: calc(100% - 242px);
+  font-size: 12px; }
 
 #app h1 {
   text-align: center;
   width: 100%;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  font-size: 40px; }
 
 .nav-container .nav {
   list-style: none;
@@ -629,9 +631,13 @@ td.rdtYear:hover {
       margin-right: 0; }
 
 .wds-training-container button {
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 12px; }
   .wds-training-container button.button--delete, .wds-training-container button.button--done {
     float: right; }
+
+#app select {
+  font-size: 12px; }
 
 .form-addnew {
   margin-bottom: 15px; }
@@ -685,12 +691,12 @@ td.rdtYear:hover {
   margin-bottom: 25px; }
 
 .upvoted-by {
-  float: left; }
+  float: left;
+  font-size: 12px; }
 
 .upvoted-count {
   display: block;
   float: left;
-  font-size: 12px;
   height: 28px;
   line-height: 28px;
   margin-right: 10px;
@@ -702,7 +708,6 @@ td.rdtYear:hover {
   .right-section .sync-status {
     display: block;
     float: left;
-    font-size: 12px;
     height: 28px;
     line-height: 28px;
     margin-right: 10px; }
@@ -720,5 +725,3 @@ td.rdtYear:hover {
   transition: transform 2.5s; }
   .upvotes-exit.upvotes-exit-active {
     transform: translateY(-100%); }
-
-/*# sourceMappingURL=style.css.map*/

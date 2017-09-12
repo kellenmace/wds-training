@@ -17,12 +17,14 @@ body {
 	background-color: $color-white;
 	padding: 16px 15px 16px 14px;
 	width: calc(100% - 242px); // for make theme only.
+	font-size: 12px;
 } // #app
 
 #app h1 {
 	text-align: center;
 	width: 100%;
 	margin-bottom: 20px;
+	font-size: 40px;
 }
 
 
@@ -88,6 +90,7 @@ body {
 //-----------------------------------------
 .wds-training-container button {
 	cursor: pointer;
+	font-size: 12px;
 
 	&.button--delete,
 	&.button--done {
@@ -99,6 +102,10 @@ body {
 //-----------------------------------------
 // Forms
 //-----------------------------------------
+#app select {
+	font-size: 12px;
+} // #app select
+
 .form-addnew {
 	margin-bottom: 15px;
 } // .form-addnew
@@ -189,12 +196,12 @@ body {
 //-----------------------------------------
 .upvoted-by {
 	float: left;
+	font-size: 12px;
 } // .upvoted-by
 
 .upvoted-count {
 	display: block;
 	float: left;
-	font-size: 12px;
 	height: 28px;
 	line-height: 28px;
 	margin-right: 10px;
@@ -208,7 +215,6 @@ body {
 	.sync-status {
 		display: block;
 		float: left;
-		font-size: 12px;
 		height: 28px;
 		line-height: 28px;
 		margin-right: 10px;

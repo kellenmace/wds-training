@@ -137,8 +137,8 @@ class Training extends React.Component {
 
 					<div className="bottom-bar">
 						<div className="select-container">
-							<label htmlFor={this.getDiscussionLeadID}>Discussion Lead</label>
-							<select id={this.getDiscussionLeadID} name="discussionLead" value={this.props.training.discussionLead} onChange={this.props.updateTraining}>
+							<label htmlFor={this.getDiscussionLeadID()}>Discussion Lead</label>
+							<select id={this.getDiscussionLeadID()} name="discussionLead" value={this.props.training.discussionLead} onChange={this.props.updateTraining}>
 							<option>Select User</option>
 							{Object.keys( this.props.users ).map(userID =>
 								<option key={userID} value={userID}>{this.props.users[userID]}</option>
@@ -147,8 +147,8 @@ class Training extends React.Component {
 						</div>
 
 						<div className="select-container">
-							<label htmlFor={this.getSuggestedByID}>Suggested By</label>
-							<select id={this.getSuggestedByID} name="suggestedBy" value={this.props.training.suggestedBy} onChange={this.props.updateTraining}>
+							<label htmlFor={this.getSuggestedByID()}>Suggested By</label>
+							<select id={this.getSuggestedByID()} name="suggestedBy" value={this.props.training.suggestedBy} onChange={this.props.updateTraining}>
 								<option>Select User</option>
 								{Object.keys( this.props.users ).map(userID =>
 									<option key={userID} value={userID}>{this.props.users[userID]}</option>
