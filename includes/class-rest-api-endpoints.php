@@ -532,7 +532,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @return bool                     Whether the user can update items.
 		 */
 		public function update_item_permissions_check( $request ) {
-			return current_user_can( 'edit_others_posts' );
+			return current_user_can( 'publish_posts' );
 		}
 
 		/**
@@ -564,7 +564,7 @@ if ( class_exists( 'WP_REST_Controller' ) ) {
 		 * @return bool                     Whether the user can delete items.
 		 */
 		public function delete_item_permissions_check( $request ) {
-			return current_user_can( 'delete_others_posts' );
+			return current_user_can( 'publish_posts' );
 		}
 	}
 }
